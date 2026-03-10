@@ -1,0 +1,601 @@
+<!doctype html>
+<html>
+  <head>
+    <script type="module" src="outageCheck.js"></script>
+    <script src="algorithm.js"></script>
+    <script src="console.js"></script>
+    <link rel="icon" type="image/x-icon" href="nbeplogo.png">
+    <title>NBEP-us.com | News</title>
+    <style>
+      html { overflow-x: hidden; max-width: 100%; }
+      body {
+        margin: 0;
+        background-color: #dbd9d3;
+        font-family: Arial, sans-serif;
+        overflow-x: hidden;
+        max-width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      * { box-sizing: border-box; }
+
+      /* ── TOP BANNER ── */
+      .banner { width: 100%; display: flex; align-items: center; background-color: white; }
+      .banner img { margin-left: 8px; margin-right: 4px; height: 1.36em; width: auto; }
+      .banner .img2 { margin-left: 4px; margin-right: 4px; height: 1em; width: 25px; }
+      .banner p { margin: 4px; font-weight: 500; }
+      .banner .p2 { margin-left: 7px; font-weight: 700; text-decoration: underline; color: #000; }
+
+      /* ── TOOLBAR ── */
+      .toolbar {
+        background-color: #000;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        padding: 0 25px;
+        position: relative;
+        width: 100%;
+      }
+      .dropdown-logo { position: relative; }
+      .dropdown-logo img { height: 48px; width: auto; border: 2px solid white; border-radius: 6px; cursor: pointer; }
+      .dropdown-menu {
+        display: none; position: absolute; top: 100%; left: 0;
+        background-color: white; min-width: 200px; border: 2px solid black;
+      }
+      .dropdown-menu a { display: block; padding: 12px 15px; text-decoration: none; color: black; font-weight: 600; }
+      .dropdown-menu a:hover { background-color: #eee; }
+      .dropdown-logo:hover .dropdown-menu { display: block; }
+      .toolbar-nav { display: flex; gap: 60px; margin-left: 60px; }
+      .toolbar-nav a {
+        color: white; text-decoration: none; font-weight: 700;
+        font-size: 22px; letter-spacing: 2px; text-transform: uppercase;
+        border-bottom: 2px solid transparent; padding-bottom: 4px;
+        transition: color 0.25s ease, border-color 0.25s ease;
+      }
+      .toolbar-nav a:hover { color: #ffd900; border-bottom: 2px solid #ffd900; }
+      .toolbar-nav a.active { color: #ffd900; border-bottom: 2px solid #ffd900; }
+      .toolbar-search { margin-left: auto; margin-right: 10px; }
+      .search-box {
+        display: flex; align-items: center;
+        background: white; border-radius: 20px;
+        padding: 6px 12px; border: 1px solid #ccc;
+        transition: box-shadow 0.2s ease;
+      }
+      .search-box:focus-within { box-shadow: 0 0 0 2px #ffd900; }
+      .search-box img { width: 16px; height: 16px; margin-right: 8px; opacity: 0.7; }
+      .search-box input { border: none; outline: none; font-size: 14px; width: 185px; font-family: Arial, sans-serif; }
+
+      /* ── PAGE HERO ── */
+      .news-hero {
+        width: 100%;
+        background-color: #1f2f5a;
+        padding: 48px 20px 42px;
+        text-align: center;
+        border-bottom: 4px solid #ffd900;
+      }
+      .news-hero h1 {
+        color: white;
+        font-family: "Times New Roman", Georgia, serif;
+        font-size: 2.6rem;
+        font-weight: 700;
+        margin: 0 0 10px 0;
+        letter-spacing: 1px;
+      }
+      .news-hero p {
+        color: #c8d8ee;
+        font-size: 1.1rem;
+        max-width: 620px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /* ── NEWS FEED WRAPPER ── */
+      .news-wrapper {
+        max-width: 1100px;
+        margin: 36px auto 48px;
+        padding: 0 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+
+      /* ── LOADING / EMPTY / ERROR STATES ── */
+      .news-state {
+        background: #fffef0;
+        border: 2px solid #000;
+        box-shadow: 3px 3px 0 #000;
+        padding: 36px 28px;
+        text-align: center;
+        font-family: "Segoe UI", Arial, sans-serif;
+        font-size: 15px;
+        color: #555;
+      }
+      .news-state .state-icon { font-size: 2.4rem; margin-bottom: 10px; }
+      .news-state p { margin: 0; }
+
+      /* ── ARTICLE CARD ── */
+      .news-card {
+        background-color: #fffef0;
+        border: 2px solid #000;
+        box-shadow: 4px 4px 0 #000;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        overflow: hidden;
+        transition: box-shadow 0.1s, transform 0.1s;
+        cursor: default;
+      }
+      .news-card:hover {
+        box-shadow: 6px 6px 0 #000;
+        transform: translate(-1px, -1px);
+      }
+
+      /* left image column */
+      .news-card-img {
+        flex-shrink: 0;
+        width: auto;
+        min-width: 180px;
+        max-width: 260px;
+        align-self: stretch;
+        overflow: hidden;
+        background: #1f2f5a;
+      }
+      .news-card-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      /* fallback when no image */
+      .news-card-img .img-fallback {
+        width: 100%;
+        height: 100%;
+        min-height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.8rem;
+        background: #1f2f5a;
+        color: #c8d8ee;
+      }
+
+      /* right text column */
+      .news-card-body {
+        padding: 20px 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 8px;
+        flex: 1;
+      }
+      .news-card-header {
+        font-family: Arial, sans-serif;
+        font-size: 1.18rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        line-height: 1.3;
+        margin: 0;
+        text-align: left;
+      }
+      .news-card-desc {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 0.97rem;
+        font-weight: 400;
+        color: #444;
+        line-height: 1.65;
+        margin: 0;
+        text-align: left;
+      }
+      .news-card-meta {
+        margin-top: auto;
+        padding-top: 10px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: #999;
+        text-align: left;
+      }
+
+      /* ── I WANT TO ── */
+      .actions-section {
+        background-color: #1f2f5a;
+        padding: 40px 20px 50px;
+        text-align: center;
+        width: 100%;
+      }
+      .actions-title {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 28px;
+        font-weight: 400;
+        color: white;
+        margin: 0 0 36px 0;
+        letter-spacing: 0.5px;
+      }
+      .actions-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 48px;
+        flex-wrap: wrap;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .action-btn {
+        display: flex; flex-direction: column;
+        align-items: center; gap: 14px;
+        width: 100px; cursor: pointer; text-decoration: none;
+      }
+      .action-btn img { width: 64px; height: 64px; object-fit: contain; filter: brightness(0) invert(1); }
+      .action-btn a {
+        font-family: Arial, sans-serif; font-size: 13px;
+        color: white; text-align: center; line-height: 1.4;
+        text-decoration: none; transition: color 0.2s, text-decoration 0.2s; display: block;
+      }
+      .action-btn a:hover { color: #ffd900; text-decoration: underline; }
+
+      /* ── CUSTOM CONTEXT MENU ── */
+      .custom-context-menu {
+        display: none; position: fixed; z-index: 99999;
+        background-color: #fffef0; border: 1.5px solid #000;
+        min-width: 180px; font-family: Arial, sans-serif;
+      }
+      .custom-context-menu a {
+        display: block; padding: 12px 15px; text-decoration: none;
+        color: black; font-weight: 600; font-size: 15px; border-bottom: 1px solid #e8e6d8;
+      }
+      .custom-context-menu a:last-child { border-bottom: none; }
+      .custom-context-menu a:hover { background-color: #f0eedc; }
+
+      /* ── VISTA DIALOG ── */
+      .vista-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.45); z-index: 999998; }
+      .vista-window {
+        display: none; position: fixed; top: 50%; left: 50%;
+        transform: translate(-50%,-50%); width: 480px; z-index: 999999;
+        border-radius: 8px 8px 6px 6px;
+        box-shadow: 0 0 0 1px #4a6fa5, 0 0 0 2px #1a3a6b, 0 8px 32px rgba(0,0,0,0.6);
+        overflow: hidden; font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      }
+      .vista-titlebar {
+        background: linear-gradient(180deg,#4a90d9 0%,#2a6bbf 40%,#1a52a0 60%,#2a6bbf 100%);
+        padding: 6px 10px; display: flex; align-items: center; justify-content: space-between;
+        border-bottom: 1px solid #1a3a6b;
+      }
+      .vista-titlebar-left { display: flex; align-items: center; gap: 7px; }
+      .vista-titlebar-icon { width: 16px; height: 16px; background: radial-gradient(circle at 35% 35%,#fff,#4a90d9); border-radius: 50%; border: 1px solid rgba(255,255,255,0.4); }
+      .vista-titlebar-text { color: white; font-size: 13px; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.5); letter-spacing: 0.3px; }
+      .vista-close {
+        width: 22px; height: 22px; border-radius: 50%; border: 1px solid #8b1a1a;
+        background: radial-gradient(circle at 40% 30%,#ff6b6b,#cc0000 60%,#8b0000);
+        color: white; font-size: 11px; font-weight: bold; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: inset 0 1px 1px rgba(255,255,255,0.3); transition: filter 0.15s;
+      }
+      .vista-close:hover { filter: brightness(1.2); }
+      .vista-body { background: linear-gradient(180deg,#f0f4fb 0%,#dce6f5 100%); padding: 0; }
+      .vista-content { padding: 20px 22px 16px 22px; border-bottom: 1px solid #b8cce4; }
+      .vista-content-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+      .vista-content-icon {
+        width: 48px; height: 48px; flex-shrink: 0;
+        background: radial-gradient(circle at 35% 30%,#fff,#4a90d9 50%,#1a52a0);
+        border-radius: 8px; border: 1px solid #4a6fa5;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        display: flex; align-items: center; justify-content: center; font-size: 26px;
+      }
+      .vista-content-title { font-size: 17px; font-weight: 700; color: #1a3a6b; text-shadow: 0 1px 0 rgba(255,255,255,0.8); }
+      .vista-content-subtitle { font-size: 12px; color: #4a6fa5; margin-top: 2px; }
+      .vista-content p { font-size: 13px; color: #222; line-height: 1.6; margin: 0 0 10px 0; }
+      .vista-footer {
+        background: linear-gradient(180deg,#dce6f5 0%,#c8d8ee 100%);
+        padding: 10px 22px; display: flex; justify-content: flex-end; gap: 8px;
+        border-top: 1px solid #b8cce4;
+      }
+      .vista-btn {
+        padding: 5px 18px; font-size: 13px; font-family: "Segoe UI",Tahoma,Arial,sans-serif;
+        border-radius: 4px; cursor: pointer; border: 1px solid #4a6fa5;
+        background: linear-gradient(180deg,#f0f6ff 0%,#d0e4f8 50%,#b8d0f0 51%,#cce0ff 100%);
+        color: #1a3a6b; font-weight: 600;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 1px 2px rgba(0,0,0,0.15);
+        transition: filter 0.15s;
+      }
+      .vista-btn:hover { filter: brightness(1.07); }
+      .vista-btn-primary {
+        border-color: #1a3a6b;
+        background: linear-gradient(180deg,#4a90d9 0%,#2a6bbf 50%,#1a52a0 51%,#2a70cc 100%);
+        color: white; box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 2px rgba(0,0,0,0.3);
+      }
+
+      /* ── FOOTER ── */
+      .footer { margin-top: auto; background: black; color: white; width: 100%; padding: 20px 0; }
+      .footer-inner { width: 95%; margin: auto; display: flex; justify-content: space-between; align-items: flex-start; }
+      .footer-links { display: flex; flex-direction: column; }
+      .footer-row { display: flex; gap: 18px; padding: 10px 0; border-bottom: 1px solid #333; }
+      .footer-row:last-child { border-bottom: none; }
+      .footer-btn { text-decoration: none; color: white; font-size: 13px; letter-spacing: .5px; padding: 2px 4px; transition: color .25s ease; }
+      .footer-btn:hover { color: #ffd900; }
+      .footer-social { margin-top: 12px; display: flex; gap: 10px; }
+      .footer-social img { height: 18px; width: 18px; }
+      .footer-logo { display: flex; align-items: center; gap: 10px; }
+      .footer-logo-img { height: 110px; width: auto; }
+      .footer-text { font-size: 15px; color: white; }
+    </style>
+  </head>
+  <body>
+
+    <!-- TOP BANNER -->
+    <div class="banner">
+      <img src="nbeplogo.png" alt="logo">
+      <img class="img2" src="usflag.png" alt="usflag">
+      <p>This is an official site of the NBEP. A non-profit non-government organization.</p>
+      <a class="p2" href="https://sayroahm.github.io/nbep/howyouknow">?</a>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+      <div class="dropdown-logo">
+        <img src="nbeplogo.png" alt="menu">
+        <div class="dropdown-menu">
+          <a href="/">Home</a>
+          <a href="/wanted">Most Wanted</a>
+          <a href="/submit-a-tip">Report Crime</a>
+          <a href="/resources">Resources</a>
+          <a href="/contact-us">Contact</a>
+        </div>
+      </div>
+      <div class="toolbar-nav">
+        <a href="/">Home</a>
+        <a href="/wanted">Most Wanted</a>
+        <a href="/news" class="active">News</a>
+        <a href="/info">What We Investigate</a>
+      </div>
+      <div class="toolbar-search">
+        <div class="search-box">
+          <img src="searchicon.png" alt="search">
+          <input type="text" placeholder="Search" id="toolbarSearch">
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div style="flex: 1;">
+
+      <!-- PAGE HERO -->
+      <div class="news-hero">
+        <h1>NBEP News &amp; Updates</h1>
+        <p>Official announcements, public advisories, and updates from the National Bureau of Exploitation Protection.</p>
+      </div>
+
+      <!-- NEWS FEED -->
+      <div class="news-wrapper" id="newsFeed">
+        <!-- Loading state -->
+        <div class="news-state" id="newsLoading">
+          <div class="state-icon">Please Wait.</div>
+          <p>Loading latest news...</p>
+        </div>
+      </div>
+
+      <!-- I WANT TO -->
+      <div class="actions-section">
+        <p class="actions-title">I Want To</p>
+        <div class="actions-buttons">
+          <div class="action-btn">
+            <img src="imagery/Apply.png" alt="Apply as a Volunteer">
+            <a href="/careers">Apply as a Volunteer</a>
+          </div>
+          <div class="action-btn">
+            <img src="imagery/submittip.png" alt="Submit a Tip">
+            <a href="/submit-a-tip">Submit a Tip</a>
+          </div>
+          <div class="action-btn">
+            <img src="imagery/contactus.png" alt="Contact the NBEP">
+            <a href="/contact-us">Contact the NBEP</a>
+          </div>
+          <div class="action-btn">
+            <img src="imagery/softwaregain.png" alt="Gain Access to NBEP Software">
+            <a href="/contact-us">Gain Access to NBEP Software</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end flex:1 -->
+
+    <!-- VISTA OVERLAY & WINDOW -->
+    <div class="vista-overlay" id="vistaOverlay"></div>
+    <div class="vista-window" id="vistaHelp">
+      <div class="vista-titlebar">
+        <div class="vista-titlebar-left">
+          <div class="vista-titlebar-icon"></div>
+          <span class="vista-titlebar-text">NBEP Help Center</span>
+        </div>
+        <div class="vista-close" id="vistaClose">X</div>
+      </div>
+      <div class="vista-body">
+        <div class="vista-content">
+          <div class="vista-content-header">
+            <div class="vista-content-icon">❔</div>
+            <div>
+              <div class="vista-content-title">NBEP Help Center</div>
+              <div class="vista-content-subtitle">National Bureau of Exploitation Protection</div>
+            </div>
+          </div>
+          <p>This page displays the latest official news and announcements from the NBEP.</p>
+          <p>Articles are published by NBEP staff. For urgent matters, please use the <strong>Contact Us</strong> or <strong>Submit a Tip</strong> pages.</p>
+        </div>
+        <div class="vista-footer">
+          <button class="vista-btn" id="vistaCloseBtn">Close</button>
+          <button class="vista-btn vista-btn-primary" onclick="window.location.href='/contact-us'">Contact Us</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <div class="footer-row">
+            <a class="footer-btn" href="/"><span>HOME</span></a>
+            <a class="footer-btn" href="/wanted"><span>MOST WANTED</span></a>
+            <a class="footer-btn" href="/news"><span>NEWS</span></a>
+            <a class="footer-btn" href="/info"><span>WHAT WE INVESTIGATE</span></a>
+          </div>
+          <div class="footer-row">
+            <a class="footer-btn" href="/contact-us"><span>CONTACT US</span></a>
+            <a class="footer-btn"><span>OFFICES</span></a>
+            <a class="footer-btn" href="/software"><span>SOFTWARE</span></a>
+            <a class="footer-btn"><span>DOCUMENTS</span></a>
+          </div>
+          <div class="footer-row">
+            <a class="footer-btn"><span>ARCHIVES</span></a>
+            <a class="footer-btn"><span>DIRECTORS ROSTER</span></a>
+            <a class="footer-btn"><span>HELP</span></a>
+            <a class="footer-btn"><span>ADMINISTRATIVE SERVICES</span></a>
+          </div>
+          <div class="footer-social">
+            <img src="youtube.png" alt="YouTube">
+            <img src="facebook.png" alt="Facebook">
+            <img src="atlassian.png" alt="Atlassian">
+            <img src="x.png" alt="X">
+          </div>
+          <div class="footer-text">
+            <p>NBEP&copy; 2026-2027. All rights reserved.</p>
+          </div>
+        </div>
+        <div class="footer-logo">
+          <img src="nbeplogo.png" class="footer-logo-img" alt="NBEP Logo">
+          <img src="nbep-text.png" class="footer-logo-img" alt="NBEP">
+        </div>
+      </div>
+    </div>
+
+    <!-- ── FIREBASE MODULE ── -->
+    <script type="module">
+      import { initializeApp }  from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+      import { getAnalytics }   from "https://www.gstatic.com/firebasejs/12.10.0/firebase-analytics.js";
+      import { getFirestore, collection, getDocs, orderBy, query }
+                                from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey:            "AIzaSyB6KN09Nx7er5eFYLkCOimWGYLJtwuwXU0",
+        authDomain:        "nbep-5039a.firebaseapp.com",
+        projectId:         "nbep-5039a",
+        storageBucket:     "nbep-5039a.firebasestorage.app",
+        messagingSenderId: "753495624185",
+        appId:             "1:753495624185:web:8245b64f6c374794081528",
+        measurementId:     "G-GRFMK30MVM"
+      };
+
+      const app       = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const db        = getFirestore(app);
+
+      console.log("Version: Lakewood I.167");
+      console.log("Page: News");
+      console.log("Firebase: Connected to nbep-5039a");
+
+      // ── LOAD NEWS ──
+      const feed    = document.getElementById("newsFeed");
+      const loading = document.getElementById("newsLoading");
+
+      try {
+        // Order by publishedAt descending if the field exists; falls back gracefully
+        const q      = query(collection(db, "news"), orderBy("publishedAt", "desc"));
+        const snap   = await getDocs(q);
+
+        loading.remove();
+
+        if (snap.empty) {
+          feed.innerHTML = `
+            <div class="news-state">
+              <div class="state-icon">📭</div>
+              <p>No news articles have been published yet. Check back soon.</p>
+            </div>`;
+        } else {
+          snap.forEach(doc => {
+            const d = doc.data();
+            const header  = d.header      || "Untitled Article";
+            const desc    = d.description || "";
+            const imgUrl  = d["img-url"]  || "";
+
+            // Format timestamp if present
+            let metaText = "";
+            if (d.publishedAt && d.publishedAt.toDate) {
+              const date = d.publishedAt.toDate();
+              metaText = date.toLocaleDateString("en-US", {
+                year: "numeric", month: "long", day: "numeric"
+              });
+            }
+
+            const card = document.createElement("div");
+            card.className = "news-card";
+            card.innerHTML = `
+              <div class="news-card-img">
+                ${imgUrl
+                  ? `<img src="${imgUrl}" alt="${header}" onerror="this.parentElement.innerHTML='<div class=\\'img-fallback\\'>📰</div>'">`
+                  : `<div class="img-fallback">📰</div>`
+                }
+              </div>
+              <div class="news-card-body">
+                <p class="news-card-header">${header}</p>
+                <p class="news-card-desc">${desc}</p>
+                ${metaText ? `<div class="news-card-meta">${metaText}</div>` : ""}
+              </div>
+            `;
+            feed.appendChild(card);
+          });
+        }
+      } catch (err) {
+        console.error("Firestore read failed:", err);
+        loading.remove();
+        feed.innerHTML = `
+          <div class="news-state">
+            <div class="state-icon">⚠️</div>
+            <p>Failed to load news. Please refresh the page or try again later.</p>
+          </div>`;
+      }
+
+      // ── CUSTOM CONTEXT MENU ──
+      const contextMenu = document.createElement("div");
+      contextMenu.classList.add("custom-context-menu");
+      contextMenu.innerHTML = `
+        <a href="/resources">Resources</a>
+        <a href="#" id="contextHelp">Help</a>
+        <a href="/admin-login">Admin Login</a>
+        <a href="/info">What We Investigate</a>
+      `;
+      document.body.appendChild(contextMenu);
+
+      document.getElementById("contextHelp").addEventListener("click", (e) => {
+        e.preventDefault();
+        contextMenu.style.display = "none";
+        openVista();
+      });
+
+      document.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        contextMenu.style.display = "block";
+        const mw = contextMenu.offsetWidth, mh = contextMenu.offsetHeight;
+        const ww = window.innerWidth,       wh = window.innerHeight;
+        contextMenu.style.left = (e.clientX + mw > ww) ? (ww - mw - 5) + "px" : e.clientX + "px";
+        contextMenu.style.top  = (e.clientY + mh > wh) ? (wh - mh - 5) + "px" : e.clientY + "px";
+      });
+
+      document.addEventListener("click",  () => { contextMenu.style.display = "none"; });
+      document.addEventListener("scroll", () => { contextMenu.style.display = "none"; });
+
+      // ── VISTA DIALOG ──
+      const vistaHelp     = document.getElementById("vistaHelp");
+      const vistaOverlay  = document.getElementById("vistaOverlay");
+      const vistaClose    = document.getElementById("vistaClose");
+      const vistaCloseBtn = document.getElementById("vistaCloseBtn");
+
+      function openVista()  { vistaHelp.style.display = "block"; vistaOverlay.style.display = "block"; }
+      function closeVista() { vistaHelp.style.display = "none";  vistaOverlay.style.display = "none";  }
+
+      vistaClose.addEventListener("click",    closeVista);
+      vistaCloseBtn.addEventListener("click", closeVista);
+      vistaOverlay.addEventListener("click",  closeVista);
+    </script>
+  </body>
+</html>

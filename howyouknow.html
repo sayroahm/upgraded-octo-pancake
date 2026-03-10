@@ -1,0 +1,415 @@
+<!doctype html>
+<html>
+  <head>
+    <script type="module" src="outageCheck.js"></script>
+    <script src="algorithm.js"></script>
+    <script src="console.js"></script>
+    <link rel="icon" type="image/x-icon" href="nbeplogo.png">
+    <title>NBEP-us.com | How You Know</title>
+    <style>
+      html {
+        overflow-x: hidden;
+        max-width: 100%;
+      }
+
+      body {
+        margin: 0px;
+        background-color: #dbd9d3;
+        font-family: Arial;
+        overflow-x: hidden;
+        max-width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      .banner {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        background-color: white;
+      }
+
+      .banner img {
+        margin-left: 8px;
+        margin-right: 4px;
+        height: 1.36em;
+        width: auto;
+      }
+
+      .banner .img2 {
+        margin-left: 4px;
+        margin-right: 4px;
+        height: 1em;
+        width: 25px;
+      }
+
+      .banner p {
+        margin: 4px;
+        font-weight: 500;
+      }
+
+      .banner .p2 {
+        margin-left: 7px;
+        font-weight: 700;
+        text-decoration: underline;
+        color: #000000;
+      }
+
+      .toolbar {
+        background-color: #000000;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        padding: 0 25px;
+        position: relative;
+        box-sizing: border-box;
+        width: 100%;
+      }
+
+      .dropdown-logo {
+        position: relative;
+      }
+
+      .dropdown-logo img {
+        height: 48px;
+        width: auto;
+        border: 2px solid white;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background-color: white;
+        min-width: 200px;
+        border: 2px solid black;
+        z-index: 1000;
+      }
+
+      .dropdown-menu a {
+        display: block;
+        padding: 12px 15px;
+        text-decoration: none;
+        color: black;
+        font-weight: 600;
+      }
+
+      .dropdown-menu a:hover {
+        background-color: #eeeeee;
+      }
+
+      .dropdown-logo:hover .dropdown-menu {
+        display: block;
+      }
+
+      .dropdown-logo::after {
+        content: '';
+        position: absolute;
+        top: 48px;
+        left: 0;
+        width: 100%;
+        height: 12px;
+      }
+
+      .toolbar-nav {
+        display: flex;
+        gap: 60px;
+        margin-left: 60px;
+      }
+
+      .toolbar-nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        border-bottom: 2px solid transparent;
+        padding-bottom: 4px;
+        transition: color 0.25s ease, border-color 0.25s ease;
+      }
+
+      .toolbar-nav a:hover {
+        color: #ffd900;
+        border-bottom: 2px solid #ffd900;
+      }
+
+      .toolbar-search {
+        margin-left: auto;
+        margin-right: 10px;
+      }
+
+      .search-box {
+        display: flex;
+        align-items: center;
+        background: white;
+        border-radius: 20px;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        transition: box-shadow 0.2s ease;
+      }
+
+      .search-box:focus-within {
+        box-shadow: 0 0 0 2px #ffd900;
+      }
+
+      .search-box img {
+        width: 16px;
+        height: 16px;
+        margin-right: 8px;
+        opacity: 0.7;
+      }
+
+      .search-box input {
+        border: none;
+        outline: none;
+        font-size: 14px;
+        width: 185px;
+        font-family: Arial, sans-serif;
+      }
+
+      .custom-context-menu {
+        display: none;
+        position: fixed;
+        z-index: 99999;
+        background-color: #fffef0;
+        border: 1.5px solid #000000;
+        min-width: 180px;
+        font-family: Arial, sans-serif;
+      }
+
+      .custom-context-menu a {
+        display: block;
+        padding: 12px 15px;
+        text-decoration: none;
+        color: black;
+        font-weight: 600;
+        font-size: 15px;
+        border-bottom: 1px solid #e8e6d8;
+      }
+
+      .custom-context-menu a:last-child {
+        border-bottom: none;
+      }
+
+      .custom-context-menu a:hover {
+        background-color: #f0eedc;
+      }
+
+      .footer{
+        margin-top:auto;
+        background:black;
+        color:white;
+        width:100%;
+        padding:20px 0;
+        font-family:Arial, sans-serif;
+      }
+
+      .footer-inner{
+        width:95%;
+        margin:auto;
+        display:flex;
+        justify-content:space-between;
+        align-items:flex-start;
+      }
+
+      .footer-links{
+        display:flex;
+        flex-direction:column;
+      }
+
+      .footer-row{
+        display:flex;
+        gap:18px;
+        padding:10px 0;
+        border-bottom:1px solid #333;
+      }
+
+      .footer-row:last-child{
+        border-bottom:none;
+      }
+
+      .footer-btn{
+        text-decoration:none;
+        color:white;
+        font-size:13px;
+        letter-spacing:.5px;
+        padding:2px 4px;
+        transition:color .25s ease;
+      }
+
+      .footer-btn:hover{
+        color:#ffd900;
+      }
+
+      .footer-social{
+        margin-top:12px;
+        display:flex;
+        gap:10px;
+      }
+
+      .footer-social img{
+        height:18px;
+        width:18px;
+      }
+
+      .footer-logo{
+        display:flex;
+        align-items:center;
+        gap:10px;
+      }
+
+      .footer-logo-img{
+        height:110px;
+        width:auto;
+      }
+      
+      .footer-text{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size:20px;
+        color:white;
+      
+      }
+
+      /* image card */
+      .image-card-container{
+        display:flex;
+        justify-content:center;
+        margin-top:40px;
+      }
+
+      .image-card{
+        position:relative;
+        width:500px;
+        overflow:hidden;
+        border:4px solid transparent;
+        transition:transform 0.35s ease, border 0.35s ease;
+      }
+
+      .image-card img{
+        width:100%;
+        display:block;
+      }
+      
+      .image-overlay{
+        position:absolute;
+        bottom:0;
+        width:100%;
+        background:rgba(0,0,0,0.6);
+        color:white;
+        text-align:center;
+        padding:12px;
+        font-size:20px;
+        opacity:0;
+        transition:opacity 0.35s ease;
+      }
+
+      .image-card:hover{
+        transform:scale(1.06);
+        border:4px solid yellow;
+      }
+
+      .image-card:hover .image-overlay{
+        opacity:1;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div class="banner"> 
+      <img src="nbeplogo.png" alt="logo"> 
+      <img class="img2" src="usflag.png" alt="usflag">
+      <p>This is an official site of the NBEP. A non-profit non-government organization.</p> 
+      <a class="p2" href="/howyouknow">?</a>
+    </div>
+
+    <div class="toolbar">
+      <div class="dropdown-logo">
+        <img src="nbeplogo.png" alt="NBEP Logo">
+        <div class="dropdown-menu">
+          <a href="/resources">Home</a>
+          <a href="/info">Most Wanted</a>
+          <a href="/admin-login">Report Crime</a>
+          <a href="/resources">Resources</a>
+          <a href="/contact-us">Contact</a>
+        </div>
+      </div>
+      <nav class="toolbar-nav">
+        <a href="/">Home</a>
+        <a href="/wanted">Most Wanted</a>
+        <a href="/news">News</a>
+        <a href="/info">What We Investigate</a>
+      </nav>
+      <div class="toolbar-search">
+        <div class="search-box">
+          <img src="searchicon.png" alt="search">
+          <input type="text" placeholder="Search" id="toolbarSearch">
+        </div>
+      </div>
+    </div>
+
+    <div class="image-card-container">
+      <div class="image-card">
+        <img src="siteauthsymbol.png" alt="example hyk">
+        <div class="image-overlay">
+          How you know
+        </div>
+      </div>
+    </div>
+  
+    <!-- footer -->
+
+    <div class="footer">
+    <div class="footer-inner">
+    <div class="footer-links">
+
+    <div class="footer-row">
+      <a class="footer-btn"><span>HOME</span></a>
+      <a class="footer-btn" href="/wanted"><span>MOST WANTED</span></a>
+      <a class="footer-btn"><span>NEWS</span></a>
+      <a class="footer-btn"><span>WHAT WE INVESTIGATE</span></a>
+    </div>
+
+    <div class="footer-row">
+      <a class="footer-btn"><span>CONTACT US</span></a>
+      <a class="footer-btn"><span>OFFICES</span></a>
+      <a class="footer-btn"><span>SOFTWARE</span></a>
+      <a class="footer-btn"><span>DOCUMENTS</span></a>
+    </div>
+
+    <div class="footer-row">
+      <a class="footer-btn"><span>ARCHIVES</span></a>
+      <a class="footer-btn"><span>DIRECTORS ROSTER</span></a>
+      <a class="footer-btn"><span>HELP</span></a>
+      <a class="footer-btn"><span>ADMINISTRATIVE SERVICES</span></a>
+    </div>
+
+    <div class="footer-social">
+      <img src="youtube.png">
+      <img src="facebook.png">
+      <img src="atlassian.png">
+      <img src="x.png">
+    </div>
+    <div class="footer-text">
+      NBEP 2026-2027. All rights reserved.
+    </div>
+
+    </div>
+
+    <div class="footer-logo">
+      <img src="nbeplogo.png" class="footer-logo-img">
+      <img src="nbep-text.png" class="footer-logo-img">
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

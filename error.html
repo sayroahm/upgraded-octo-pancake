@@ -1,0 +1,407 @@
+<!doctype html>
+<html>
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-59DEK49FXJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-59DEK49FXJ');
+    </script>
+    <link rel="icon" type="image/x-icon" href="nbeplogo.png">
+    <title>NBEP-us.com | We'll Be Right Back</title>
+    <style>
+      html {
+        overflow-x: hidden;
+        max-width: 100%;
+      }
+      body {
+        margin: 0px;
+        background-color: #dbd9d3;
+        font-family: Arial;
+        overflow-x: hidden;
+        max-width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      * {
+        box-sizing: border-box;
+      }
+
+      /*  Banner  */
+      .banner {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        background-color: white;
+      }
+      .banner img {
+        margin-left: 8px;
+        margin-right: 4px;
+        height: 1.36em;
+        width: auto;
+      }
+      .banner .img2 {
+        margin-left: 4px;
+        margin-right: 4px;
+        height: 1em;
+        width: 25px;
+      }
+      .banner p {
+        margin: 4px;
+        font-weight: 500;
+      }
+      .banner .p2 {
+        margin-left: 7px;
+        font-weight: 700;
+        text-decoration: underline;
+        color: #000000;
+      }
+
+      /*  Toolbar  */
+      .toolbar {
+        background-color: #000000;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        padding: 0 25px;
+        position: relative;
+        box-sizing: border-box;
+        width: 100%;
+      }
+      .dropdown-logo {
+        position: relative;
+      }
+      .dropdown-logo img {
+        height: 48px;
+        width: auto;
+        border: 2px solid white;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: white;
+        min-width: 200px;
+        border: 2px solid black;
+      }
+      .dropdown-menu a {
+        display: block;
+        padding: 12px 15px;
+        text-decoration: none;
+        color: black;
+        font-weight: 600;
+      }
+      .dropdown-menu a:hover {
+        background-color: #eeeeee;
+      }
+      .dropdown-logo:hover .dropdown-menu {
+        display: block;
+      }
+      .toolbar-nav {
+        display: flex;
+        gap: 60px;
+        margin-left: 60px;
+      }
+      .toolbar-nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        border-bottom: 2px solid transparent;
+        padding-bottom: 4px;
+        transition: color 0.25s ease, border-color 0.25s ease;
+      }
+      .toolbar-nav a:hover {
+        color: #ffd900;
+        border-bottom: 2px solid #ffd900;
+      }
+      .toolbar-search {
+        margin-left: auto;
+        margin-right: 10px;
+      }
+      .search-box {
+        display: flex;
+        align-items: center;
+        background: white;
+        border-radius: 20px;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        transition: box-shadow 0.2s ease;
+      }
+      .search-box:focus-within {
+        box-shadow: 0 0 0 2px #ffd900;
+      }
+      .search-box img {
+        width: 16px;
+        height: 16px;
+        margin-right: 8px;
+        opacity: 0.7;
+      }
+      .search-box input {
+        border: none;
+        outline: none;
+        font-size: 14px;
+        width: 185px;
+        font-family: Arial, sans-serif;
+      }
+
+      /*  Downtime Content Area  */
+      .downtime-wrapper {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 40px;
+        max-width: 1100px;
+        margin: 0 auto;
+        width: 100%;
+        gap: 60px;
+      }
+
+      /* Left: text block */
+      .downtime-text {
+        flex: 1;
+        min-width: 280px;
+        text-align: left;
+      }
+
+      .downtime-divider {
+        border: none;
+        border-top: 1.5px solid #aaa;
+        margin-bottom: 22px;
+      }
+
+      .downtime-title {
+        font-family: Arial, sans-serif;
+        font-size: 2.1rem;
+        font-weight: 700;
+        color: #111111;
+        margin: 0 0 18px 0;
+        letter-spacing: 0.3px;
+        line-height: 1.2;
+      }
+
+      .downtime-body {
+        font-family: Arial, sans-serif;
+        font-size: 0.97rem;
+        color: #333333;
+        line-height: 1.7;
+        margin: 0;
+        max-width: 480px;
+      }
+
+      .downtime-body a {
+        color: #1a3aaf;
+        text-decoration: underline;
+        font-weight: 600;
+      }
+
+      .downtime-body a:hover {
+        color: #ffd900;
+      }
+
+      /* Right: image */
+      .downtime-image {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .downtime-image img {
+        width: 320px;
+        height: auto;
+        object-fit: contain;
+        /* Slight drop shadow for depth, matching LinkedIn reference */
+        filter: drop-shadow(0px 4px 12px rgba(0,0,0,0.15));
+      }
+
+      /*  Footer  */
+      .footer {
+        margin-top: auto;
+        background: black;
+        color: white;
+        width: 100%;
+        padding: 20px 0;
+        font-family: Arial, sans-serif;
+      }
+      .footer-inner {
+        width: 95%;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .footer-links {
+        display: flex;
+        flex-direction: column;
+      }
+      .footer-row {
+        display: flex;
+        gap: 18px;
+        padding: 10px 0;
+        border-bottom: 1px solid #333;
+      }
+      .footer-row:last-child {
+        border-bottom: none;
+      }
+      .footer-btn {
+        text-decoration: none;
+        color: white;
+        font-size: 13px;
+        letter-spacing: .5px;
+        padding: 2px 4px;
+        transition: color .25s ease;
+      }
+      .footer-btn:hover {
+        color: #ffd900;
+      }
+      .footer-social {
+        margin-top: 12px;
+        display: flex;
+        gap: 10px;
+      }
+      .footer-social img {
+        height: 18px;
+        width: 18px;
+      }
+      .footer-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .footer-logo-img {
+        height: 110px;
+        width: auto;
+      }
+      .footer-text {
+        font-family: Arial, sans-serif;
+        font-size: 15px;
+        color: white;
+      }
+
+      /*  Responsive  */
+      @media (max-width: 720px) {
+        .downtime-wrapper {
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 40px 24px;
+          gap: 36px;
+        }
+        .downtime-image img {
+          width: 220px;
+        }
+        .toolbar-nav {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Top Banner -->
+    <div class="banner">
+      <img src="nbeplogo.png" alt="logo">
+      <img class="img2" src="usflag.png" alt="usflag">
+      <p>This is an official site of the NBEP. A non-profit non-government organization.</p>
+      <a class="p2" href="https://sayroahm.github.io/nbep/howyouknow">?</a>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="dropdown-logo">
+        <img src="nbeplogo.png" alt="menu">
+        <div class="dropdown-menu">
+          <a href="#">Home</a>
+          <a href="/wanted">Most Wanted</a>
+          <a href="/submit-a-tip">Report Crime</a>
+          <a href="/resources">Resources</a>
+          <a href="/contact-us">Contact</a>
+        </div>
+      </div>
+      <div class="toolbar-nav">
+        <a href="#">Home</a>
+        <a href="/wanted">Most Wanted</a>
+        <a href="/news">News</a>
+        <a href="/info">What We Investigate</a>
+      </div>
+      <div class="toolbar-search">
+        <div class="search-box">
+          <img src="searchicon.png" alt="search">
+          <input type="text" placeholder="Search" id="toolbarSearch">
+        </div>
+      </div>
+    </div>
+
+    <!-- Downtime Content -->
+    <div class="downtime-wrapper">
+
+      <!-- Left: Text -->
+      <div class="downtime-text">
+        <hr class="downtime-divider">
+        <h1 class="downtime-title">We'll Be Right Back</h1>
+        <p class="downtime-body">
+          There appears to have been a server issue, or maintenance is currently undergoing right now.
+          We will be right back with you. For now, please contact our email,
+          <a href="mailto:nbeporganizationgmail@gmail.com">nbeporganizationgmail@gmail.com</a>
+          regarding any tips. For more information about this outage, please check the news article
+          that will be provided after this outage.
+        </p>
+      </div>
+
+      <!-- Right: Image -->
+      <div class="downtime-image">
+        <img src="https://img.nbep-us.com/downtime/image.png" alt="NBEP Downtime Illustration">
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <div class="footer-row">
+            <a class="footer-btn"><span>HOME</span></a>
+            <a class="footer-btn"><span>MOST WANTED</span></a>
+            <a class="footer-btn"><span>NEWS</span></a>
+            <a class="footer-btn"><span>WHAT WE INVESTIGATE</span></a>
+          </div>
+          <div class="footer-row">
+            <a class="footer-btn"><span>CONTACT US</span></a>
+            <a class="footer-btn"><span>OFFICES</span></a>
+            <a class="footer-btn"><span>SOFTWARE</span></a>
+            <a class="footer-btn"><span>DOCUMENTS</span></a>
+          </div>
+          <div class="footer-row">
+            <a class="footer-btn"><span>ARCHIVES</span></a>
+            <a class="footer-btn"><span>DIRECTORS ROSTER</span></a>
+            <a class="footer-btn"><span>HELP</span></a>
+            <a class="footer-btn"><span>ADMINISTRATIVE SERVICES</span></a>
+          </div>
+          <div class="footer-social">
+            <img src="youtube.png">
+            <img src="facebook.png">
+            <img src="atlassian.png">
+            <img src="x.png">
+          </div>
+          <div class="footer-text">
+            <p>NBEP&copy; 2026-2027. All rights reserved.</p>
+          </div>
+        </div>
+        <div class="footer-logo">
+          <img src="nbeplogo.png" class="footer-logo-img">
+          <img src="nbep-text.png" class="footer-logo-img">
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

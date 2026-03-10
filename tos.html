@@ -1,0 +1,1037 @@
+<!doctype html>
+<html>
+  <head>
+    <script type="module" src="outageCheck.js"></script>
+    <link rel="icon" type="image/x-icon" href="nbeplogo.png">
+    <title>NBEP-us.com | Terms of Service</title>
+    <!-- mammoth.js for .docx rendering in-browser -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <style>
+      html {
+        overflow-x: hidden;
+        max-width: 100%;
+      }
+      body {
+        margin: 0px;
+        background-color: #dbd9d3;
+        font-family: Arial;
+        overflow-x: hidden;
+        max-width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      * { box-sizing: border-box; }
+
+      /*  top banner  */
+      .banner {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        background-color: white;
+      }
+      .banner img { margin-left: 8px; margin-right: 4px; height: 1.36em; width: auto; }
+      .banner .img2 { margin-left: 4px; margin-right: 4px; height: 1em; width: 25px; }
+      .banner p { margin: 4px; font-weight: 500; }
+      .banner .p2 { margin-left: 7px; font-weight: 700; text-decoration: underline; color: #000000; }
+
+      /*  toolbar  */
+      .toolbar {
+        background-color: #000000;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        padding: 0 25px;
+        position: relative;
+        width: 100%;
+      }
+      .dropdown-logo { position: relative; }
+      .dropdown-logo img {
+        height: 48px; width: auto;
+        border: 2px solid white; border-radius: 6px; cursor: pointer;
+      }
+      .dropdown-menu {
+        display: none; position: absolute; top: 100%; left: 0;
+        background-color: white; min-width: 200px; border: 2px solid black;
+      }
+      .dropdown-menu a {
+        display: block; padding: 12px 15px;
+        text-decoration: none; color: black; font-weight: 600;
+      }
+      .dropdown-menu a:hover { background-color: #eeeeee; }
+      .dropdown-logo:hover .dropdown-menu { display: block; }
+      .toolbar-nav { display: flex; gap: 60px; margin-left: 60px; }
+      .toolbar-nav a {
+        color: white; text-decoration: none; font-weight: 700;
+        font-size: 22px; letter-spacing: 2px; text-transform: uppercase;
+        border-bottom: 2px solid transparent; padding-bottom: 4px;
+        transition: color 0.25s ease, border-color 0.25s ease;
+      }
+      .toolbar-nav a:hover { color: #ffd900; border-bottom: 2px solid #ffd900; }
+      .toolbar-search { margin-left: auto; margin-right: 10px; }
+      .search-box {
+        display: flex; align-items: center; background: white;
+        border-radius: 20px; padding: 6px 12px; border: 1px solid #ccc;
+        transition: box-shadow 0.2s ease;
+      }
+      .search-box:focus-within { box-shadow: 0 0 0 2px #ffd900; }
+      .search-box img { width: 16px; height: 16px; margin-right: 8px; opacity: 0.7; }
+      .search-box input {
+        border: none; outline: none; font-size: 14px;
+        width: 185px; font-family: Arial, sans-serif;
+      }
+
+      /*  disclaimer warn  */
+      .home-warn {
+        margin: 30px auto;
+        max-width: 1200px;
+        background-color: #fff7e6;
+        border-left: 6px solid #ff8c00;
+        border-radius: 10px;
+        padding: 18px 22px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      }
+      .home-warn h3 { margin: 0 0 6px 0; color: #ff8c00; font-size: 1.25rem; font-weight: 700; }
+      .home-warn p { margin: 0; font-size: 1rem; line-height: 1.5; color: #333; }
+
+      /*  page title strip  */
+      .page-title-strip {
+        background-color: #1a1a1a;
+        color: white;
+        padding: 18px 30px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        border-bottom: 3px solid #ffd900;
+      }
+      .page-title-strip h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+      .page-title-strip span {
+        font-size: 0.85rem;
+        color: #aaa;
+        letter-spacing: 1px;
+      }
+
+      /*  docx viewer wrapper  */
+      .tos-layout {
+        display: flex;
+        gap: 0;
+        max-width: 1200px;
+        margin: 30px auto 40px;
+        width: 95%;
+      }
+
+      /*  sidebar  */
+      .tos-sidebar {
+        width: 220px;
+        flex-shrink: 0;
+        background-color: #1a1a1a;
+        border: 2px solid #000;
+        border-right: none;
+        display: flex;
+        flex-direction: column;
+      }
+      .tos-sidebar-header {
+        background-color: #000;
+        color: #ffd900;
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 10px 14px;
+        border-bottom: 1px solid #333;
+      }
+      .sidebar-upload-area {
+        padding: 16px 14px;
+        border-bottom: 1px solid #333;
+      }
+      .sidebar-upload-label {
+        display: block;
+        background-color: #ffd900;
+        color: #000;
+        font-weight: 700;
+        font-size: 12px;
+        text-align: center;
+        padding: 8px 10px;
+        cursor: pointer;
+        border: 2px solid #000;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      .sidebar-upload-label:hover { background-color: #e6c200; }
+      #docxFileInput { display: none; }
+      .sidebar-file-name {
+        margin-top: 8px;
+        font-size: 11px;
+        color: #aaa;
+        word-break: break-all;
+        min-height: 16px;
+        text-align: center;
+      }
+
+      /* page thumbnails */
+      .sidebar-pages-header {
+        color: #888;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 10px 14px 6px;
+      }
+      .sidebar-pages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0 10px 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .sidebar-pages::-webkit-scrollbar { width: 4px; }
+      .sidebar-pages::-webkit-scrollbar-track { background: #111; }
+      .sidebar-pages::-webkit-scrollbar-thumb { background: #444; }
+      .page-thumb {
+        background-color: #2a2a2a;
+        border: 2px solid #444;
+        border-radius: 2px;
+        padding: 8px 10px;
+        cursor: pointer;
+        color: #ccc;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .page-thumb:hover { border-color: #ffd900; color: #ffd900; }
+      .page-thumb.active { border-color: #ffd900; background-color: #333; color: #ffd900; }
+      .page-thumb-icon { font-size: 16px; opacity: 0.7; }
+
+      /*  main viewer area  */
+      .tos-viewer {
+        flex: 1;
+        background-color: #f5f5f0;
+        border: 2px solid #000;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* viewer toolbar */
+      .viewer-toolbar {
+        background-color: #222;
+        display: flex;
+        align-items: center;
+        padding: 6px 14px;
+        gap: 10px;
+        border-bottom: 2px solid #000;
+        flex-wrap: wrap;
+      }
+      .viewer-toolbar-btn {
+        background-color: #444;
+        color: white;
+        border: 1px solid #666;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 5px 12px;
+        cursor: pointer;
+        letter-spacing: 0.5px;
+        font-family: Arial;
+      }
+      .viewer-toolbar-btn:hover { background-color: #ffd900; color: #000; border-color: #ffd900; }
+      .viewer-toolbar-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+      .viewer-toolbar-btn:disabled:hover { background-color: #444; color: white; border-color: #666; }
+      .viewer-page-indicator {
+        color: #ccc;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin: 0 6px;
+      }
+      .viewer-zoom-label {
+        color: #888;
+        font-size: 11px;
+        margin-left: auto;
+        letter-spacing: 1px;
+      }
+      .viewer-zoom-select {
+        background-color: #333;
+        color: white;
+        border: 1px solid #666;
+        font-size: 12px;
+        padding: 4px 6px;
+        font-family: Arial;
+        cursor: pointer;
+      }
+      .viewer-download-btn {
+        background-color: #1a3aaf;
+        color: white;
+        border: 1px solid #000;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 5px 14px;
+        cursor: pointer;
+        letter-spacing: 0.5px;
+        font-family: Arial;
+        margin-left: 8px;
+        text-decoration: none;
+        display: inline-block;
+      }
+      .viewer-download-btn:hover { background-color: #ffd900; color: #000; }
+
+      /* page display */
+      .viewer-pages-container {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        background-color: #888;
+        min-height: 500px;
+      }
+      .viewer-pages-container::-webkit-scrollbar { width: 8px; }
+      .viewer-pages-container::-webkit-scrollbar-track { background: #666; }
+      .viewer-pages-container::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+      .doc-page {
+        background-color: white;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        width: 100%;
+        max-width: 820px;
+        padding: 72px 80px;
+        font-family: "Times New Roman", serif;
+        font-size: 12pt;
+        line-height: 1.6;
+        color: #111;
+        position: relative;
+        /* page border decoration */
+        border: 1px solid #ccc;
+        min-height: 1060px;
+        display: none;
+      }
+      .doc-page.active { display: block; }
+
+      /* page number footer */
+      .doc-page::after {
+        content: attr(data-page-label);
+        position: absolute;
+        bottom: 24px;
+        left: 0; right: 0;
+        text-align: center;
+        font-size: 10pt;
+        color: #888;
+        font-family: Arial, sans-serif;
+        letter-spacing: 1px;
+      }
+
+      /* mammoth content styling */
+      .doc-page h1 { font-size: 18pt; font-weight: 700; margin-bottom: 12pt; color: #1a1a1a; }
+      .doc-page h2 { font-size: 14pt; font-weight: 700; margin-top: 14pt; margin-bottom: 8pt; color: #1a1a1a; }
+      .doc-page h3 { font-size: 12pt; font-weight: 700; margin-top: 10pt; margin-bottom: 6pt; }
+      .doc-page p { margin-bottom: 8pt; }
+      .doc-page ul, .doc-page ol { margin-left: 20pt; margin-bottom: 8pt; }
+      .doc-page li { margin-bottom: 4pt; }
+      .doc-page table { border-collapse: collapse; width: 100%; margin-bottom: 10pt; }
+      .doc-page table td, .doc-page table th {
+        border: 1px solid #ccc; padding: 6px 10px; font-size: 11pt;
+      }
+      .doc-page table th { background-color: #f0f0f0; font-weight: 700; }
+      .doc-page strong { font-weight: 700; }
+
+      /* empty/placeholder state */
+      .viewer-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 480px;
+        color: #ccc;
+        gap: 16px;
+        text-align: center;
+      }
+      .viewer-placeholder-icon { font-size: 64px; opacity: 0.4; }
+      .viewer-placeholder h3 { font-size: 1.1rem; font-weight: 700; margin: 0; letter-spacing: 1px; color: #bbb; }
+      .viewer-placeholder p { font-size: 0.85rem; margin: 0; color: #888; max-width: 300px; }
+
+      /*  loading bar  */
+      .loading-bar-wrap {
+        display: none;
+        height: 4px;
+        background-color: #333;
+        position: relative;
+        overflow: hidden;
+      }
+      .loading-bar-fill {
+        height: 100%;
+        background-color: #ffd900;
+        width: 0%;
+        transition: width 0.3s ease;
+        position: absolute;
+      }
+      .loading-bar-wrap.active { display: block; }
+
+      /*  error state  */
+      .viewer-error {
+        display: none;
+        background-color: #fff0f0;
+        border: 2px solid #cc0000;
+        padding: 20px;
+        margin: 20px;
+        color: #cc0000;
+        font-weight: 700;
+        font-size: 13px;
+        border-radius: 4px;
+      }
+      .viewer-error.active { display: block; }
+
+      /*  NBEP TOS default doc  */
+      .tos-default-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        border-bottom: 2px solid #1a1a1a;
+        padding-bottom: 16px;
+        margin-bottom: 20px;
+      }
+      .tos-default-header img { height: 56px; width: auto; }
+      .tos-default-header-text h1 { font-size: 16pt; margin: 0 0 4px 0; font-family: Arial, sans-serif; }
+      .tos-default-header-text p { font-size: 9pt; margin: 0; color: #555; font-family: Arial, sans-serif; }
+
+      /*  footer  */
+      .footer {
+        margin-top: auto;
+        background: black;
+        color: white;
+        width: 100%;
+        padding: 20px 0;
+        font-family: Arial, sans-serif;
+      }
+      .footer-inner {
+        width: 95%; margin: auto;
+        display: flex; justify-content: space-between; align-items: flex-start;
+      }
+      .footer-links { display: flex; flex-direction: column; }
+      .footer-row { display: flex; gap: 18px; padding: 10px 0; border-bottom: 1px solid #333; }
+      .footer-row:last-child { border-bottom: none; }
+      .footer-btn {
+        text-decoration: none; color: white; font-size: 13px;
+        letter-spacing: .5px; padding: 2px 4px; transition: color .25s ease;
+      }
+      .footer-btn:hover { color: #ffd900; }
+      .footer-social { margin-top: 12px; display: flex; gap: 10px; }
+      .footer-social img { height: 18px; width: 18px; }
+      .footer-logo { display: flex; align-items: center; gap: 10px; }
+      .footer-logo-img { height: 110px; width: auto; }
+      .footer-text { font-family: Arial, sans-serif; font-size: 15px; color: white; }
+    </style>
+  </head>
+  <body>
+
+    <!-- top banner -->
+    <div class="banner">
+      <img src="nbeplogo.png" alt="logo">
+      <img class="img2" src="usflag.png" alt="usflag">
+      <p>This is an official site of the NBEP. A non-profit non-government organization.</p>
+      <a class="p2" href="https://sayroahm.github.io/nbep/howyouknow">?</a>
+    </div>
+
+    <!-- toolbar -->
+    <div class="toolbar">
+      <div class="dropdown-logo">
+        <img src="nbeplogo.png" alt="menu">
+        <div class="dropdown-menu">
+          <a href="/">Home</a>
+          <a href="/wanted">Most Wanted</a>
+          <a href="/submit-a-tip">Report Crime</a>
+          <a href="/resources">Resources</a>
+          <a href="/contact-us">Contact</a>
+        </div>
+      </div>
+      <div class="toolbar-nav">
+        <a href="/">Home</a>
+        <a href="/wanted">Most Wanted</a>
+        <a href="/news">News</a>
+        <a href="/info">What We Investigate</a>
+      </div>
+      <div class="toolbar-search">
+        <div class="search-box">
+          <img src="searchicon.png" alt="search">
+          <input type="text" placeholder="Search" id="toolbarSearch">
+        </div>
+      </div>
+    </div>
+
+    <!-- flex:1 content wrapper -->
+    <div style="flex:1;">
+
+      <!-- page title strip -->
+      <div class="page-title-strip">
+        <h1>Terms of Service</h1>
+      </div>
+
+      <!-- disclaimer -->
+      <div class="home-warn">
+        <h3>⚠ Notice:</h3>
+        <p>Failure to comply with the provided TOS will result in a permanent IP ban and a "No-Affiliation" policy with your specific user.</p>
+      </div>
+
+      <!-- docx viewer layout -->
+      <div class="tos-layout">
+
+        <!-- sidebar -->
+        <div class="tos-sidebar">
+          <div class="tos-sidebar-header">Felix Importables</div>
+
+          <div class="sidebar-upload-area">
+            <label class="sidebar-upload-label" for="docxFileInput">
+              Load .docx File
+            </label>
+            <input type="file" id="docxFileInput" accept=".docx">
+            <div class="sidebar-file-name" id="sidebarFileName">No file loaded</div>
+          </div>
+
+          <div class="sidebar-pages-header">Pages</div>
+          <div class="sidebar-pages" id="sidebarPages">
+            <!-- page thumbs injected by JS -->
+            <div style="color:#555; font-size:11px; padding:6px 4px;">Load a document to see pages.</div>
+          </div>
+        </div>
+
+        <!-- main viewer -->
+        <div class="tos-viewer">
+          <div class="viewer-toolbar">
+            <button class="viewer-toolbar-btn" id="btnPrevPage" disabled>◀ PREV</button>
+            <span class="viewer-page-indicator" id="pageIndicator">— / —</span>
+            <button class="viewer-toolbar-btn" id="btnNextPage" disabled>NEXT ▶</button>
+
+            <span class="viewer-zoom-label">ZOOM:</span>
+            <select class="viewer-zoom-select" id="zoomSelect">
+              <option value="0.75">75%</option>
+              <option value="0.9">90%</option>
+              <option value="1" selected>100%</option>
+              <option value="1.1">110%</option>
+              <option value="1.25">125%</option>
+              <option value="1.5">150%</option>
+            </select>
+
+            <a class="viewer-download-btn" id="downloadBtn" style="display:none;" download>⬇ Download</a>
+          </div>
+
+          <!-- loading bar -->
+          <div class="loading-bar-wrap" id="loadingBar">
+            <div class="loading-bar-fill" id="loadingBarFill"></div>
+          </div>
+
+          <!-- error box -->
+          <div class="viewer-error" id="viewerError">
+            ✖ Failed to load document. Please ensure the file is a valid .docx file and try again.
+          </div>
+
+          <!-- pages container -->
+          <div class="viewer-pages-container" id="viewerPagesContainer">
+
+            <!-- PAGE 1 -->
+            <div class="doc-page active" id="defaultPage" data-page-label="Page 1 of 8 — NBEP Terms of Service">
+              <div class="tos-default-header">
+                <img src="nbeplogo.png" alt="NBEP Logo" onerror="this.style.display:'none'">
+                <div class="tos-default-header-text">
+                  <h1>National Bureau of Exploitation Protection</h1>
+                  <p>Terms of Service &amp; User Agreement &nbsp;|&nbsp; Document Version 1.0 &nbsp;|&nbsp; Effective: March 8, 2026</p>
+                </div>
+              </div>
+              <p style="font-size:10pt; color:#555; border-bottom:1px solid #ddd; padding-bottom:10px; margin-bottom:18px;">
+                This document constitutes a binding agreement between you (the "User") and the National Bureau of Exploitation Protection ("NBEP"). Please read every section carefully before using any NBEP service, platform, or resource. By continuing to use this site you confirm that you have read, understood, and agreed to every term written below.
+              </p>
+              <h2>Article I &mdash; Introduction and Purpose</h2>
+              <h3>Section 1.1 &mdash; Who We Are</h3>
+              <p>The National Bureau of Exploitation Protection, commonly referred to as "NBEP," is a <strong>non-government, non-profit organization</strong> established with the goal of assisting individuals and communities in reporting, documenting, and escalating cyber crime and exploitation-related incidents. NBEP does not function as a law enforcement body, and any reference to investigation-related activity on this site refers strictly to our internal case intake and forwarding procedures.</p>
+              <p>If you or someone you know is in immediate danger, please contact <strong>911</strong> or your local law enforcement agency right away. NBEP is not a substitute for emergency services under any circumstance.</p>
+              <h3>Section 1.2 &mdash; Scope of This Agreement</h3>
+              <p>This Terms of Service applies to all users who access or interact with the NBEP website (nbep-us.com), its subpages, affiliated platforms, volunteer portals, administrative services, software distributions, and any other service operating under the NBEP name or brand. This includes users who are simply browsing, users who submit tips or reports, and users who are registered volunteers or staff members.</p>
+              <p>Use of any NBEP service, even passively, constitutes acceptance of this agreement in full. There are no partial agreements or opt-outs for specific sections. If you cannot agree to any part of these terms, your only option is to stop using NBEP services entirely.</p>
+              <h3>Section 1.3 &mdash; Definitions</h3>
+              <p>Throughout this document, the following terms carry specific meanings:</p>
+              <ul>
+                <li><strong>"NBEP"</strong> refers to the National Bureau of Exploitation Protection, its Directors, staff, volunteers, and representatives acting on its behalf.</li>
+                <li><strong>"User"</strong> refers to any individual who accesses, browses, submits data to, or interacts with any NBEP platform in any way.</li>
+                <li><strong>"Affiliate"</strong> refers to any person or organization that has an active working relationship with NBEP, including but not limited to volunteers, partner organizations, and contracted services.</li>
+                <li><strong>"Services"</strong> refers to all NBEP platforms, tools, software, web pages, forms, databases, and communications channels.</li>
+                <li><strong>"No-Affiliation Policy"</strong> refers to a formal internal declaration by NBEP that it will no longer recognize, cooperate with, or associate with a specific individual or entity in any capacity.</li>
+                <li><strong>"Permanent IP Ban"</strong> refers to the technical and administrative blocking of a User's internet address from all NBEP infrastructure, without time limit or opportunity for appeal unless otherwise stated by NBEP leadership in writing.</li>
+              </ul>
+            </div>
+
+            <!-- PAGE 2 -->
+            <div class="doc-page" id="defaultPage2" data-page-label="Page 2 of 8 — NBEP Terms of Service">
+              <h2>Article II &mdash; Acceptable Use of NBEP Services</h2>
+              <h3>Section 2.1 &mdash; General Conduct Standards</h3>
+              <p>NBEP maintains a straightforward expectation of all users: behave honestly, interact respectfully, and do not use our services to harm others or to harm the organization itself. The following standards apply at all times when using any NBEP platform.</p>
+              <ul>
+                <li>All information submitted to NBEP, including but not limited to tip forms, contact messages, volunteer applications, and software access requests, must be truthful and accurate to the best of the user's knowledge.</li>
+                <li>Users must not attempt to misrepresent their identity, their affiliation, their credentials, or the nature of any incident they are reporting.</li>
+                <li>Users must treat NBEP staff, volunteers, and other affiliated parties with basic human dignity. Rude, hostile, threatening, or degrading language directed at NBEP personnel is not acceptable in any form of communication.</li>
+                <li>Users must not attempt to disrupt, overload, manipulate, or otherwise interfere with NBEP's technical infrastructure, including its website, servers, or internal systems.</li>
+                <li>Users must not use NBEP services as a vehicle for personal vendettas, harassment campaigns, or attempts to falsely implicate innocent individuals in criminal activity.</li>
+              </ul>
+              <h3>Section 2.2 &mdash; Prohibited Actions</h3>
+              <p>The following actions are explicitly prohibited and may result in immediate enforcement actions up to and including a Permanent IP Ban and No-Affiliation Policy declaration. This list is not exhaustive. NBEP reserves the right to determine that an unlisted action is prohibited if it falls within the spirit of these restrictions.</p>
+              <ul>
+                <li>Submitting a tip, report, or complaint that you know to be false, fabricated, or materially misleading.</li>
+                <li>Attempting unauthorized access to any NBEP administrative panel, internal database, staff-only portal, or restricted software system.</li>
+                <li>Using automated bots, crawlers, scrapers, or scripts to interact with NBEP platforms without prior written authorization from NBEP leadership.</li>
+                <li>Impersonating any NBEP Director, staff member, volunteer, or affiliated partner in any public or private context.</li>
+                <li>Distributing, reproducing, or republishing NBEP internal documents, case files, volunteer records, or software without explicit written authorization.</li>
+                <li>Attempting to contact, pressure, or intimidate any individual whose information appears within NBEP case files or the Most Wanted section, outside of proper legal channels.</li>
+                <li>Using any NBEP communication channel to spread misinformation, political propaganda, or content unrelated to the organization's mission.</li>
+                <li>Engaging in any form of doxxing, swatting, or targeted harassment facilitated by or directed toward NBEP services or personnel.</li>
+              </ul>
+              <h3>Section 2.3 &mdash; Tip and Report Submission Standards</h3>
+              <p>NBEP operates a public tip submission system. Users who submit tips do so with the understanding that all submitted information will be reviewed by NBEP personnel and may be forwarded to appropriate law enforcement agencies or investigative bodies. The following apply specifically to tip submissions:</p>
+              <ul>
+                <li>Tips must relate to actual, real-world incidents or concerns. Fictional, hypothetical, or test submissions outside of clearly designated testing environments are not permitted.</li>
+                <li>Tips submitted with the intent to harm a specific individual through false accusations are considered a severe violation of this agreement and will be treated accordingly.</li>
+                <li>Users who submit tips agree that NBEP may retain that submission for operational and legal recordkeeping purposes, even if the user later requests removal.</li>
+                <li>NBEP makes no guarantee of outcome for any submitted tip. Case escalation and investigation decisions rest entirely with the receiving law enforcement or investigative agencies.</li>
+              </ul>
+            </div>
+
+            <!-- PAGE 3 -->
+            <div class="doc-page" id="defaultPage3" data-page-label="Page 3 of 8 — NBEP Terms of Service">
+              <h2>Article III &mdash; Rights of NBEP-Affiliated Individuals</h2>
+              <h3>Section 3.1 &mdash; Protection of NBEP Personnel</h3>
+              <p>Every person who works with, volunteers for, or is otherwise affiliated with NBEP has a right to carry out their role without fear of harassment, intimidation, retaliation, or any form of targeted harm. NBEP takes violations of this right seriously and will respond to them firmly and without hesitation.</p>
+              <p>Any user who is found to have violated the rights of an NBEP-affiliated individual, whether that person is a Director, a volunteer, a staff member, or a partner organization representative, will face enforcement action. Depending on severity, this may include referral to law enforcement in addition to internal NBEP enforcement measures.</p>
+              <h3>Section 3.2 &mdash; What Constitutes a Violation of Affiliate Rights</h3>
+              <p>The following behaviors are considered violations of the rights of NBEP-affiliated individuals and will trigger enforcement procedures without delay:</p>
+              <ul>
+                <li>Publicly or privately threatening any NBEP affiliate with physical harm, baseless legal action, or reputational damage through knowingly false information.</li>
+                <li>Attempting to contact an NBEP affiliate through personal, non-official channels in order to coerce, pressure, or harass them in connection with their NBEP work.</li>
+                <li>Publishing or sharing private personal information about any NBEP affiliate without their explicit consent.</li>
+                <li>Coordinating or encouraging third parties to target any NBEP affiliate through harassment campaigns, mass complaints, or other coordinated actions.</li>
+                <li>Using NBEP platforms to gather information about affiliates for purposes unrelated to legitimate case reporting.</li>
+                <li>Making false formal accusations against NBEP affiliates through the tip system or any other official channel in an attempt to have them removed or penalized.</li>
+              </ul>
+              <h3>Section 3.3 &mdash; Consequences for Violating Affiliate Rights</h3>
+              <p>Violations of Section 3.1 or Section 3.2 will result, at minimum, in the following actions being taken against the responsible user:</p>
+              <ul>
+                <li>A <strong>Permanent IP Ban</strong> from all NBEP services and platforms, applied without warning in cases of clear and deliberate violation.</li>
+                <li>A formal <strong>No-Affiliation Policy</strong> declaration, meaning NBEP will not cooperate with, assist, or associate with the violating user in any capacity going forward.</li>
+                <li>Documentation of the incident in NBEP's internal records for reference in any future interactions or legal proceedings.</li>
+                <li>Referral of the incident to appropriate law enforcement agencies if the violation involves credible threats, harassment, or other potentially criminal behavior.</li>
+              </ul>
+              <h2>Article IV &mdash; Termination from NBEP and Its Consequences</h2>
+              <h3>Section 4.1 &mdash; Grounds for Termination of Affiliation</h3>
+              <p>Any individual who currently holds or has previously held a volunteer, staff, or partner position with NBEP may have their affiliation formally terminated. Termination may occur for any of the following reasons, among others:</p>
+              <ul>
+                <li>Violation of any section of this Terms of Service while serving in an NBEP role.</li>
+                <li>Conduct unbecoming of an NBEP representative, whether occurring during official duties or in a personal capacity, if that conduct reflects negatively on the organization.</li>
+                <li>Disclosure of confidential NBEP information, case details, internal communications, or volunteer identifying information to unauthorized parties.</li>
+                <li>Failure to follow directives issued by NBEP leadership after receiving reasonable notice and opportunity to comply.</li>
+                <li>Discovery that an individual provided false information during their application or onboarding process.</li>
+                <li>Any conduct listed under the prohibited actions in Article II of this agreement.</li>
+              </ul>
+            </div>
+
+            <!-- PAGE 4 -->
+            <div class="doc-page" id="defaultPage4" data-page-label="Page 4 of 8 — NBEP Terms of Service">
+              <h3>Section 4.2 &mdash; Consequences of Termination</h3>
+              <p>When an individual's affiliation with NBEP is terminated, the following actions are taken immediately and without further notice unless NBEP leadership determines otherwise on a case-by-case basis:</p>
+              <ul>
+                <li>All access credentials, including logins, software keys, and system permissions, are revoked immediately.</li>
+                <li>The individual is formally prohibited from representing NBEP in any public or private capacity.</li>
+                <li>A <strong>Permanent IP Ban</strong> is applied to all known access points used by the individual to interact with NBEP services.</li>
+                <li>A <strong>No-Affiliation Policy</strong> is declared, meaning NBEP will not recognize, respond to, or cooperate with the terminated individual in any formal or informal capacity.</li>
+                <li>If the termination was the result of a criminal act or a disclosure of sensitive case information, the incident may be reported to the appropriate authorities.</li>
+              </ul>
+              <h3>Section 4.3 &mdash; No Right to Re-Association After Termination</h3>
+              <p>Individuals who have been formally terminated from NBEP, and for whom a No-Affiliation Policy has been declared, do not have an automatic right to re-apply, appeal, or re-establish any form of working relationship with NBEP. Any such requests will be reviewed solely at the discretion of NBEP's Director, and a response is not guaranteed.</p>
+              <h2>Article V &mdash; Unauthorized Use of NBEP Systems and Identity</h2>
+              <h3>Section 5.1 &mdash; System Integrity</h3>
+              <p>NBEP's digital infrastructure exists to serve a specific humanitarian and civic purpose. Any attempt to undermine, exploit, or misuse that infrastructure is taken as a direct attack on the mission of the organization and on the individuals it serves.</p>
+              <p>Users are strictly prohibited from attempting to gain unauthorized access to any NBEP system. This includes, but is not limited to, administrative login portals, internal databases, case management systems, volunteer directories, software distribution servers, and back-end configuration files. The intent behind an access attempt does not reduce the severity of the violation.</p>
+              <h3>Section 5.2 &mdash; Prohibited System Activities</h3>
+              <ul>
+                <li>Attempting to exploit known or unknown vulnerabilities in NBEP platforms, regardless of whether such an attempt is successful.</li>
+                <li>Using automated tools, scripts, or other technical methods to interact with NBEP systems in ways not intended for public use.</li>
+                <li>Attempting to intercept, alter, or read NBEP communications or data transmissions without authorization.</li>
+                <li>Submitting malicious code, files, or links through any NBEP input method, including tip forms, contact forms, or software access applications.</li>
+                <li>Using credentials that do not belong to you to access any part of NBEP's services, even if those credentials were shared voluntarily by a third party.</li>
+                <li>Falsely representing yourself as an NBEP system administrator, technical staff member, or security researcher in order to gain access to restricted areas.</li>
+              </ul>
+              <h3>Section 5.3 &mdash; Identity Misuse and Impersonation</h3>
+              <p>The NBEP name, logo, branding, and the identities of its staff and volunteers are not available for unauthorized public use. Any individual found to be impersonating NBEP or any of its affiliates, whether online or in person, will face immediate enforcement action and potential referral to law enforcement for investigation into fraud or related charges.</p>
+              <p>This includes creating fake social media profiles, websites, or communication channels that appear to represent NBEP or its personnel. It also includes using NBEP's name to solicit funds, personal information, or compliance from members of the public without authorization from NBEP leadership.</p>
+            </div>
+
+            <!-- PAGE 5 -->
+            <div class="doc-page" id="defaultPage5" data-page-label="Page 5 of 8 — NBEP Terms of Service">
+              <h2>Article VI &mdash; Automatic Disqualification and Permanent Bans</h2>
+              <h3>Section 6.1 &mdash; Categories Subject to Automatic Permanent IP Ban</h3>
+              <p>Certain categories of users and certain types of conduct trigger an automatic and immediate Permanent IP Ban without the need for a formal review process. NBEP has a zero tolerance policy for the behaviors listed in this section. There is no warning period, no probationary step, and no manual override required. Identification of any of the following situations will result in immediate, permanent removal from all NBEP services.</p>
+              <h3>Section 6.2 &mdash; Listed Sex Offenders</h3>
+              <p>Any individual who is identified as an active registrant on any publicly accessible sex offender registry, in any jurisdiction, is permanently and irrevocably banned from all NBEP services. This includes the website, all affiliated platforms, volunteer systems, software access, and any other service operating under the NBEP brand. The nature or classification of the registry offense does not affect this policy. Registration on the list is sufficient for this ban to apply.</p>
+              <p>NBEP exists in part to protect individuals from exploitation. Allowing registered sex offenders to interact with our services in any capacity is fundamentally incompatible with that mission and will not be tolerated.</p>
+              <h3>Section 6.3 &mdash; CSAM, Child Exploitation, and Related Conduct</h3>
+              <p>Any individual who is identified as having shared, produced, solicited, distributed, or possessed child sexual abuse material (CSAM), child pornography (CP), or any other form of sexually explicit content involving minors, is permanently and irrevocably banned from all NBEP services, regardless of whether that individual has faced formal legal consequences for that conduct.</p>
+              <p>Additionally, any individual who is found to have used NBEP's own tip submission system, communications channels, or any other NBEP platform in an attempt to identify, contact, locate, or gather information about minors for exploitative purposes will face an immediate Permanent IP Ban, a No-Affiliation Policy declaration, and referral to the appropriate federal and state law enforcement agencies without exception and without delay.</p>
+              <p>NBEP cooperates fully with law enforcement investigations involving child exploitation. If information about such conduct comes to our attention through any means, we will report it. Full stop.</p>
+              <h3>Section 6.4 &mdash; General Conduct Resulting in Automatic Ban</h3>
+              <p>Beyond the specific categories above, the following general behaviors also trigger an automatic Permanent IP Ban and No-Affiliation Policy declaration. These are behaviors that NBEP considers incompatible with basic standards of human decency and civic responsibility:</p>
+              <ul>
+                <li>Deliberately filing false reports against innocent individuals with the intent to cause them harm, legal trouble, or reputational damage.</li>
+                <li>Using NBEP services in connection with any ongoing criminal scheme, including fraud, extortion, trafficking, or organized harassment campaigns.</li>
+                <li>Attempting to use NBEP's platform or name to retaliate against a whistleblower, victim, or witness involved in a case.</li>
+                <li>Engaging in racially motivated, religiously motivated, or otherwise bias-driven harassment directed at NBEP staff, volunteers, or any party associated with a submitted case.</li>
+                <li>Any conduct that a reasonable person would characterize as deeply harmful, exploitative, or predatory, even if that specific conduct is not enumerated elsewhere in this document.</li>
+              </ul>
+              <p>NBEP's leadership retains the right to exercise judgment in applying this section. The intent is to ensure that individuals who demonstrate a consistent pattern of harmful or exploitative behavior cannot use NBEP's resources against the very people NBEP exists to protect.</p>
+            </div>
+
+            <!-- PAGE 6 -->
+            <div class="doc-page" id="defaultPage6" data-page-label="Page 6 of 8 — NBEP Terms of Service">
+              <h2>Article VII &mdash; The No-Affiliation Policy</h2>
+              <h3>Section 7.1 &mdash; What the No-Affiliation Policy Means</h3>
+              <p>When NBEP declares a No-Affiliation Policy against a specific individual or entity, it means the following, without exception:</p>
+              <ul>
+                <li>NBEP will not respond to communications from that individual or entity through any channel.</li>
+                <li>NBEP will not process, acknowledge, or act on any tip, report, or submission originating from that individual.</li>
+                <li>NBEP will not enter into any agreement, partnership, volunteer arrangement, or cooperative effort with that individual or any organization they formally represent.</li>
+                <li>NBEP will not provide any reference, statement, or documentation on behalf of that individual for any purpose including employment verification or legal proceedings, unless compelled by law.</li>
+                <li>Any previously granted access, credentials, or authorizations associated with that individual are permanently revoked.</li>
+              </ul>
+              <h3>Section 7.2 &mdash; Scope of the No-Affiliation Policy</h3>
+              <p>The No-Affiliation Policy applies across all NBEP platforms and services. It cannot be circumvented by using a different device, a different internet connection, a different email address, or by having a third party act on the banned individual's behalf. Any attempt to circumvent this policy will be treated as a new and separate violation, subject to additional enforcement action and potential legal referral.</p>
+              <h3>Section 7.3 &mdash; Public Notice</h3>
+              <p>In cases where NBEP determines it is appropriate and in the public interest to do so, a No-Affiliation declaration may be publicly noted on NBEP's official communications or website. Such notices will not include personal identifying information beyond what is legally permissible and operationally necessary.</p>
+              <h2>Article VIII &mdash; Volunteer and Staff Conduct</h2>
+              <h3>Section 8.1 &mdash; Standards for NBEP Representatives</h3>
+              <p>Volunteers and staff members carry the NBEP name into every interaction they have in their NBEP capacity. As a result, the standards applied to them are higher than those applied to general users. In addition to everything in this document that applies to all users, NBEP representatives are also expected to:</p>
+              <ul>
+                <li>Maintain confidentiality about all case details, internal discussions, volunteer identifying information, and organizational strategy.</li>
+                <li>Represent NBEP accurately and without embellishment when speaking to the public, press, or other organizations.</li>
+                <li>Decline to accept gifts, compensation, or benefits from parties who have submitted reports or who are subjects of NBEP cases.</li>
+                <li>Report any conflict of interest, including personal relationships with report subjects, to NBEP leadership promptly.</li>
+                <li>Avoid making public statements that could compromise an ongoing case, embarrass the organization, or be interpreted as official positions without proper authorization from leadership.</li>
+              </ul>
+              <h3>Section 8.2 &mdash; Volunteer Onboarding Agreement</h3>
+              <p>All volunteers are required to sign a separate Volunteer Onboarding Agreement in addition to accepting this Terms of Service. That agreement contains role-specific responsibilities, confidentiality obligations, and conduct standards tailored to the volunteer's position. This TOS and the Volunteer Onboarding Agreement are read together and both apply simultaneously. In the event of a conflict between the two documents, NBEP leadership will determine which provision controls on a case-by-case basis.</p>
+            </div>
+
+            <!-- PAGE 7 -->
+            <div class="doc-page" id="defaultPage7" data-page-label="Page 7 of 8 — NBEP Terms of Service">
+              <h2>Article IX &mdash; Software Access and Distribution</h2>
+              <h3>Section 9.1 &mdash; Access Requirements</h3>
+              <p>Access to any software distributed by NBEP is granted on a case-by-case basis. There is no general public right to NBEP software. Users requesting access must submit a formal request through the designated channel, provide accurate identifying and purpose information, and agree to the terms set out in any accompanying software license agreement in addition to this TOS.</p>
+              <h3>Section 9.2 &mdash; Restrictions on Software Use</h3>
+              <ul>
+                <li>NBEP software may not be redistributed, sold, sublicensed, or shared with any individual or organization not explicitly authorized by NBEP.</li>
+                <li>Reverse engineering, decompiling, disassembling, or otherwise attempting to derive the source code of any NBEP software is strictly prohibited.</li>
+                <li>NBEP software may only be used for the purposes described at the time of access authorization. Use for any other purpose requires a new application and approval.</li>
+                <li>Software access may be revoked at any time and without prior notice if NBEP determines the user is not complying with this TOS or the accompanying license agreement.</li>
+              </ul>
+              <h2>Article X &mdash; Privacy and Data Handling</h2>
+              <h3>Section 10.1 &mdash; What NBEP Does Not Collect</h3>
+              <p>NBEP is committed to operating with transparency about data practices. Unless explicitly stated otherwise on a specific page or form, NBEP does not collect, store, or transmit the following:</p>
+              <ul>
+                <li>Browser cookies or tracking pixels used to monitor user behavior across sessions or sites.</li>
+                <li>IP address logs tied to general browsing activity on the public-facing website.</li>
+                <li>Device fingerprinting data, geolocation data, or any passive telemetry from site visitors.</li>
+              </ul>
+              <h3>Section 10.2 &mdash; What NBEP Does Collect</h3>
+              <p>When a user actively submits information through a form, including tip submissions, contact messages, volunteer applications, or software access requests, that submitted information is retained by NBEP for operational and legal purposes. Users who submit such information consent to its retention and understand that it may be shared with law enforcement if it relates to a reportable incident.</p>
+              <h3>Section 10.3 &mdash; No Third-Party Data Selling</h3>
+              <p>NBEP does not sell, rent, or trade user data to any third party for commercial purposes. Data sharing with external parties is limited to legally required disclosures and operational necessity related to law enforcement referrals.</p>
+              <h2>Article XI &mdash; Disclaimer of Liability</h2>
+              <h3>Section 11.1 &mdash; No Warranty</h3>
+              <p>NBEP provides all services, information, and resources on an "as is" basis. No warranty, express or implied, is made regarding the accuracy, completeness, timeliness, or fitness for any particular purpose of any content or service provided by NBEP. Users rely on NBEP information and services entirely at their own risk.</p>
+              <h3>Section 11.2 &mdash; No Guarantee of Case Outcomes</h3>
+              <p>NBEP is not a law enforcement agency and has no authority to compel any investigation, arrest, prosecution, or other legal action. All case outcomes rest entirely with the law enforcement agencies or other bodies to which NBEP may forward a report. NBEP cannot and does not guarantee any specific result from any tip or report submitted through its platforms.</p>
+              <h3>Section 11.3 &mdash; Limitation on Damages</h3>
+              <p>To the fullest extent permitted by applicable law, NBEP shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of or inability to use NBEP services, including but not limited to reliance on information published on this site, loss of data, unauthorized access to your submissions, or the actions or inactions of any law enforcement agency receiving a referral from NBEP.</p>
+            </div>
+
+            <!-- PAGE 8 -->
+            <div class="doc-page" id="defaultPage8" data-page-label="Page 8 of 8 — NBEP Terms of Service">
+              <h2>Article XII &mdash; Modifications to This Agreement</h2>
+              <h3>Section 12.1 &mdash; Right to Amend</h3>
+              <p>NBEP reserves the right to update, revise, expand, or otherwise modify this Terms of Service at any time, for any reason, and without prior notice to users. Changes become effective as soon as they are published on the NBEP website. The version date at the top of this document reflects the most recent update.</p>
+              <h3>Section 12.2 &mdash; User Responsibility to Stay Informed</h3>
+              <p>It is the user's responsibility to review this Terms of Service periodically and stay informed of any changes. Continued use of any NBEP service after a modification has been published constitutes acceptance of the updated terms. If you disagree with any change, your only recourse is to stop using NBEP services.</p>
+              <h2>Article XIII &mdash; Governing Principles</h2>
+              <h3>Section 13.1 &mdash; Good Faith Participation</h3>
+              <p>NBEP operates in good faith and expects the same from all users. This agreement is intended to be read and applied in a spirit of good faith. If a specific situation is not addressed by any article or section of this document, NBEP will apply the principles that underlie this agreement and use reasonable judgment in determining how to respond.</p>
+              <h3>Section 13.2 &mdash; No Waiver</h3>
+              <p>NBEP's failure to enforce any specific provision of this agreement in a given instance does not constitute a waiver of that provision or of NBEP's right to enforce it in the future. All terms remain in full effect regardless of whether NBEP has previously declined to act on a specific violation.</p>
+              <h2>Article XIV &mdash; Contact and Questions</h2>
+              <h3>Section 14.1 &mdash; General Inquiries</h3>
+              <p>If you have questions about these Terms of Service or would like clarification on any section, please reach out through the <a href="/contact-us">official NBEP Contact page</a>. Please do not use the tip submission system to ask questions about this document. The tip system is reserved for actual incident reports only.</p>
+              <h3>Section 14.2 &mdash; Reporting Violations of This TOS</h3>
+              <p>If you believe that another user is violating these Terms of Service, including by impersonating NBEP staff, filing false reports, or engaging in prohibited conduct toward NBEP affiliates, you are encouraged to report that behavior through the Contact page. Provide as much detail as possible so that NBEP can investigate and respond appropriately.</p>
+              <h3>Section 14.3 &mdash; Acknowledgment</h3>
+              <p>By using any NBEP service, you acknowledge that you have read this Terms of Service document in its entirety, that you understand what it requires of you, and that you agree to be bound by all of its provisions. You further acknowledge that NBEP is entitled to enforce this agreement fully and that the consequences described herein may be applied to your access without further warning if you are found to be in violation.</p>
+              <p style="margin-top: 40px; color:#555; font-size:10pt; border-top:1px solid #ccc; padding-top:14px; text-align:center;">
+                NBEP &copy; 2026&ndash;2027 &nbsp;|&nbsp; All Rights Reserved &nbsp;|&nbsp; Non-Profit &amp; Non-Government Organization &nbsp;|&nbsp; nbep-us.com
+                <br>
+                <em>Document Version 1.0 &nbsp;|&nbsp; Effective March 8, 2026 &nbsp;|&nbsp; 14 Articles &nbsp;|&nbsp; 8 Pages</em>
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <div class="footer">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <div class="footer-row">
+            <a class="footer-btn" href="/"><span>HOME</span></a>
+            <a class="footer-btn" href="/wanted"><span>MOST WANTED</span></a>
+            <a class="footer-btn" href="/news"><span>NEWS</span></a>
+            <a class="footer-btn" href="/info"><span>WHAT WE INVESTIGATE</span></a>
+          </div>
+          <div class="footer-row">
+            <a class="footer-btn" href="/contact-us"><span>CONTACT US</span></a>
+            <a class="footer-btn" href="/offices"><span>OFFICES</span></a>
+            <a class="footer-btn" href="/software"><span>SOFTWARE</span></a>
+            <a class="footer-btn" href="/documents"><span>DOCUMENTS</span></a>
+          </div>
+          <div class="footer-row">
+            <a class="footer-btn" href="/archives"><span>ARCHIVES</span></a>
+            <a class="footer-btn" href="/directors"><span>DIRECTORS ROSTER</span></a>
+            <a class="footer-btn" href="#"><span>HELP</span></a>
+            <a class="footer-btn" href="/admin-login"><span>ADMINISTRATIVE SERVICES</span></a>
+          </div>
+          <div class="footer-social">
+            <img src="youtube.png" alt="YouTube">
+            <img src="facebook.png" alt="Facebook">
+            <img src="atlassian.png" alt="Atlassian">
+            <img src="x.png" alt="X">
+          </div>
+          <div class="footer-text">
+            <p>NBEP&copy; 2026-2027. All rights reserved.</p>
+          </div>
+        </div>
+        <div class="footer-logo">
+          <img src="nbeplogo.png" class="footer-logo-img" alt="NBEP Logo">
+          <img src="nbep-text.png" class="footer-logo-img" alt="NBEP Text">
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let pages = [];           // array of { element, label }
+      let currentPage = 0;
+      let usingDefault = true;
+      let currentObjectURL = null;
+
+      const fileInput          = document.getElementById("docxFileInput");
+      const sidebarFileName    = document.getElementById("sidebarFileName");
+      const sidebarPages       = document.getElementById("sidebarPages");
+      const pagesContainer     = document.getElementById("viewerPagesContainer");
+      const btnPrev            = document.getElementById("btnPrevPage");
+      const btnNext            = document.getElementById("btnNextPage");
+      const pageIndicator      = document.getElementById("pageIndicator");
+      const zoomSelect         = document.getElementById("zoomSelect");
+      const downloadBtn        = document.getElementById("downloadBtn");
+      const loadingBar         = document.getElementById("loadingBar");
+      const loadingBarFill     = document.getElementById("loadingBarFill");
+      const viewerError        = document.getElementById("viewerError");
+
+      function initDefaultPages() {
+        usingDefault = true;
+        pages = [
+          { element: document.getElementById("defaultPage"),  label: "Page 1" },
+          { element: document.getElementById("defaultPage2"), label: "Page 2" },
+          { element: document.getElementById("defaultPage3"), label: "Page 3" },
+          { element: document.getElementById("defaultPage4"), label: "Page 4" },
+          { element: document.getElementById("defaultPage5"), label: "Page 5" },
+          { element: document.getElementById("defaultPage6"), label: "Page 6" },
+          { element: document.getElementById("defaultPage7"), label: "Page 7" },
+          { element: document.getElementById("defaultPage8"), label: "Page 8" },
+        ];
+        currentPage = 0;
+        renderSidebar();
+        showPage(0);
+        downloadBtn.style.display = "none";
+        viewerError.classList.remove("active");
+      }
+
+      function showPage(idx) {
+        if (idx < 0 || idx >= pages.length) return;
+        pages.forEach(p => p.element.classList.remove("active"));
+        pages[idx].element.classList.add("active");
+        currentPage = idx;
+        updateControls();
+        updateSidebarActive();
+
+        // scroll viewer to top
+        pagesContainer.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function updateControls() {
+        pageIndicator.textContent = `${currentPage + 1} / ${pages.length}`;
+        btnPrev.disabled = currentPage === 0;
+        btnNext.disabled = currentPage === pages.length - 1;
+      }
+
+      function updateSidebarActive() {
+        const thumbs = sidebarPages.querySelectorAll(".page-thumb");
+        thumbs.forEach((t, i) => {
+          t.classList.toggle("active", i === currentPage);
+        });
+      }
+
+      function renderSidebar() {
+        sidebarPages.innerHTML = "";
+        pages.forEach((p, i) => {
+          const div = document.createElement("div");
+          div.className = "page-thumb" + (i === currentPage ? " active" : "");
+          div.innerHTML = `<span class="page-thumb-icon">📄</span>${p.label}`;
+          div.addEventListener("click", () => showPage(i));
+          sidebarPages.appendChild(div);
+        });
+      }
+
+      zoomSelect.addEventListener("change", () => {
+        const scale = parseFloat(zoomSelect.value);
+        pagesContainer.style.fontSize = (scale * 12) + "pt";
+        // scale page width
+        document.querySelectorAll(".doc-page").forEach(pg => {
+          pg.style.maxWidth = Math.round(820 * scale) + "px";
+          pg.style.padding = Math.round(72 * scale) + "px " + Math.round(80 * scale) + "px";
+        });
+      });
+      
+      btnPrev.addEventListener("click", () => showPage(currentPage - 1));
+      btnNext.addEventListener("click", () => showPage(currentPage + 1));
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+          if (currentPage < pages.length - 1) showPage(currentPage + 1);
+        } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+          if (currentPage > 0) showPage(currentPage - 1);
+        }
+      });
+
+      function showLoading() {
+        loadingBar.classList.add("active");
+        loadingBarFill.style.width = "0%";
+        let p = 0;
+        const iv = setInterval(() => {
+          p = Math.min(p + Math.random() * 18, 85);
+          loadingBarFill.style.width = p + "%";
+          if (p >= 85) clearInterval(iv);
+        }, 120);
+        return iv;
+      }
+
+      function finishLoading() {
+        loadingBarFill.style.width = "100%";
+        setTimeout(() => {
+          loadingBar.classList.remove("active");
+          loadingBarFill.style.width = "0%";
+        }, 400);
+      }
+
+      function chunkIntoPages(htmlString) {
+        // We render to a temp div then split by headings or char limit
+        const temp = document.createElement("div");
+        temp.innerHTML = htmlString;
+
+        const CHARS_PER_PAGE = 3200;
+        const chunks = [];
+        let current = "";
+        const nodes = Array.from(temp.childNodes);
+
+        nodes.forEach(node => {
+          const text = node.textContent || "";
+          if (current.length + text.length > CHARS_PER_PAGE && current.length > 0) {
+            chunks.push(current);
+            current = "";
+          }
+          const wrapper = document.createElement("div");
+          wrapper.appendChild(node.cloneNode(true));
+          current += wrapper.innerHTML;
+        });
+
+        if (current.length > 0) chunks.push(current);
+        if (chunks.length === 0) chunks.push(htmlString);
+
+        return chunks;
+      }
+      fileInput.addEventListener("change", async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (!file.name.endsWith(".docx")) {
+          viewerError.textContent = "✖ Invalid file type. Please upload a .docx file.";
+          viewerError.classList.add("active");
+          return;
+        }
+
+        viewerError.classList.remove("active");
+        sidebarFileName.textContent = file.name;
+
+        const loadInterval = showLoading();
+
+        try {
+          const arrayBuffer = await file.arrayBuffer();
+          const result = await mammoth.convertToHtml({ arrayBuffer });
+
+          clearInterval(loadInterval);
+
+          document.querySelectorAll(".doc-page.dynamic").forEach(p => p.remove());
+
+          ["defaultPage","defaultPage2","defaultPage3","defaultPage4",
+           "defaultPage5","defaultPage6","defaultPage7","defaultPage8"].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) { el.classList.remove("active"); el.style.display = "none"; }
+          });
+
+          const htmlContent = result.value;
+          const chunks = chunkIntoPages(htmlContent);
+
+          pages = [];
+          chunks.forEach((chunk, i) => {
+            const pg = document.createElement("div");
+            pg.className = "doc-page dynamic";
+            pg.setAttribute("data-page-label", `Page ${i + 1} — ${file.name}`);
+            pg.innerHTML = chunk;
+            pagesContainer.appendChild(pg);
+            pages.push({ element: pg, label: `Page ${i + 1}` });
+          });
+
+          usingDefault = false;
+          currentPage = 0;
+          renderSidebar();
+          showPage(0);
+
+          if (currentObjectURL) URL.revokeObjectURL(currentObjectURL);
+          currentObjectURL = URL.createObjectURL(file);
+          downloadBtn.href = currentObjectURL;
+          downloadBtn.download = file.name;
+          downloadBtn.style.display = "inline-block";
+
+          finishLoading();
+
+        } catch (err) {
+          clearInterval(loadInterval);
+          finishLoading();
+          viewerError.textContent = "✖ Failed to parse document: " + err.message;
+          viewerError.classList.add("active");
+          console.error("Mammoth error:", err);
+        }
+      });
+
+      initDefaultPages();
+    </script>
+  </body>
+</html>

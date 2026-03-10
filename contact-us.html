@@ -1,0 +1,820 @@
+<!doctype html>
+<html>
+  <head>
+    <script type="module" src="outageCheck.js"></script>
+    <script src="algorithm.js"></script>
+    <script src="console.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <link rel="icon" type="image/x-icon" href="nbeplogo.png">
+    <title>NBEP-us.com | Contact Us</title>
+    <style>
+      html {
+        overflow-x: hidden;
+        max-width: 100%;
+      }
+      body {
+        margin: 0px;
+        background-color: #dbd9d3;
+        font-family: Arial;
+        overflow-x: hidden;
+        max-width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      * {
+        box-sizing: border-box;
+      }
+
+      /*  TOP BANNER  */
+      .banner {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        background-color: white;
+      }
+      .banner img { margin-left: 8px; margin-right: 4px; height: 1.36em; width: auto; }
+      .banner .img2 { margin-left: 4px; margin-right: 4px; height: 1em; width: 25px; }
+      .banner p { margin: 4px; font-weight: 500; }
+      .banner .p2 {
+        margin-left: 7px; font-weight: 700;
+        text-decoration: underline; color: #000000;
+      }
+
+      /*  TOOLBAR  */
+      .toolbar {
+        background-color: #000000;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        padding: 0 25px;
+        position: relative;
+        box-sizing: border-box;
+        width: 100%;
+      }
+      .dropdown-logo { position: relative; }
+      .dropdown-logo img {
+        height: 48px; width: auto;
+        border: 2px solid white; border-radius: 6px; cursor: pointer;
+      }
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%; left: 0;
+        background-color: white;
+        min-width: 200px;
+        border: 2px solid black;
+      }
+      .dropdown-menu a {
+        display: block; padding: 12px 15px;
+        text-decoration: none; color: black; font-weight: 600;
+      }
+      .dropdown-menu a:hover { background-color: #eeeeee; }
+      .dropdown-logo:hover .dropdown-menu { display: block; }
+      .toolbar-nav { display: flex; gap: 60px; margin-left: 60px; }
+      .toolbar-nav a {
+        color: white; text-decoration: none; font-weight: 700;
+        font-size: 22px; letter-spacing: 2px; text-transform: uppercase;
+        border-bottom: 2px solid transparent; padding-bottom: 4px;
+        transition: color 0.25s ease, border-color 0.25s ease;
+      }
+      .toolbar-nav a:hover { color: #ffd900; border-bottom: 2px solid #ffd900; }
+      .toolbar-search { margin-left: auto; margin-right: 10px; }
+      .search-box {
+        display: flex; align-items: center;
+        background: white; border-radius: 20px;
+        padding: 6px 12px; border: 1px solid #ccc;
+        transition: box-shadow 0.2s ease;
+      }
+      .search-box:focus-within { box-shadow: 0 0 0 2px #ffd900; }
+      .search-box img { width: 16px; height: 16px; margin-right: 8px; opacity: 0.7; }
+      .search-box input {
+        border: none; outline: none;
+        font-size: 14px; width: 185px; font-family: Arial, sans-serif;
+      }
+
+      /*  PAGE HERO  */
+      .contact-hero {
+        width: 100%;
+        background-color: #1f2f5a;
+        padding: 48px 20px 42px;
+        text-align: center;
+        border-bottom: 4px solid #ffd900;
+      }
+      .contact-hero h1 {
+        color: white;
+        font-family: "Times New Roman", Georgia, serif;
+        font-size: 2.6rem;
+        font-weight: 700;
+        margin: 0 0 10px 0;
+        letter-spacing: 1px;
+      }
+      .contact-hero p {
+        color: #c8d8ee;
+        font-size: 1.1rem;
+        margin: 0;
+        max-width: 620px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /*  DISCLAIMER (modified)  */
+      .home-warn {
+        margin: 30px auto;
+        max-width: 1200px;
+        background-color: #fff7e6;
+        border-left: 6px solid #ff8c00;
+        border-radius: 10px;
+        padding: 18px 22px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+      }
+      .home-warn h3 { margin: 0 0 6px 0; color: #ff8c00; font-size: 1.25rem; font-weight: 700; }
+      .home-warn p { margin: 0; font-size: 1rem; line-height: 1.5; color: #333; }
+      .warn-icon {
+        background: #ff8c00; color: white;
+        width: 26px; height: 26px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-weight: bold; flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      /*  CONTACT LAYOUT  */
+      .contact-wrapper {
+        display: flex;
+        gap: 32px;
+        max-width: 1200px;
+        margin: 0 auto 48px;
+        padding: 0 20px;
+        flex-wrap: wrap;
+        align-items: flex-start;
+      }
+
+      /*  CONTACT FORM  */
+      .contact-form-box {
+        flex: 2;
+        min-width: 300px;
+        background-color: #fffef0;
+        border: 2px solid #000;
+        box-shadow: 4px 4px 0px #000;
+        padding: 30px 28px;
+        font-family: "Segoe UI", Arial, sans-serif;
+      }
+      .contact-form-box h2 {
+        font-size: 1.3rem;
+        color: #1a1a1a;
+        font-weight: 700;
+        margin: 0 0 22px 0;
+        letter-spacing: 0.4px;
+        border-bottom: 2px solid #000;
+        padding-bottom: 10px;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 18px;
+      }
+      .form-group label {
+        font-size: 13px;
+        font-weight: 700;
+        color: #1a1a1a;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        border: 2px solid #000;
+        background: white;
+        padding: 9px 12px;
+        font-size: 14px;
+        font-family: "Segoe UI", Arial, sans-serif;
+        outline: none;
+        border-radius: 0;
+        transition: box-shadow 0.15s;
+        width: 100%;
+        resize: none;
+      }
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        box-shadow: 0 0 0 2px #ffd900;
+      }
+      .form-group textarea { height: 130px; }
+
+      .form-row { display: flex; gap: 16px; flex-wrap: wrap; }
+      .form-row .form-group { flex: 1; min-width: 140px; }
+
+      .form-submit-btn {
+        display: inline-block;
+        margin-top: 8px;
+        padding: 11px 32px;
+        background-color: #1f2f5a;
+        color: white;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        border: 2px solid #000;
+        cursor: pointer;
+        box-shadow: 3px 3px 0px #000;
+        transition: background-color 0.2s, transform 0.1s, box-shadow 0.1s;
+      }
+      .form-submit-btn:hover { background-color: #2a3f7a; }
+      .form-submit-btn:active {
+        transform: translate(2px, 2px);
+        box-shadow: 1px 1px 0px #000;
+      }
+
+      .form-success {
+        display: none;
+        margin-top: 16px;
+        background-color: #e6f9ec;
+        border-left: 5px solid #28a745;
+        border-radius: 6px;
+        padding: 14px 16px;
+        font-size: 14px;
+        color: #1a5c2d;
+        font-weight: 600;
+      }
+
+      /*  CONTACT SIDEBAR  */
+      .contact-sidebar {
+        flex: 1;
+        min-width: 240px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .sidebar-card {
+        background-color: #fffef0;
+        border: 2px solid #000;
+        box-shadow: 3px 3px 0px #000;
+        padding: 20px 18px;
+        font-family: "Segoe UI", Arial, sans-serif;
+      }
+      .sidebar-card h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin: 0 0 12px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 2px solid #000;
+        padding-bottom: 8px;
+      }
+      .sidebar-card p {
+        font-size: 13px;
+        color: #333;
+        line-height: 1.6;
+        margin: 0 0 8px 0;
+      }
+      .sidebar-card p:last-child { margin-bottom: 0; }
+      .sidebar-card a {
+        color: #1f2f5a;
+        font-weight: 700;
+        text-decoration: underline;
+        transition: color 0.2s;
+      }
+      .sidebar-card a:hover { color: #ffd900; }
+
+      .sidebar-badge {
+        display: inline-block;
+        background: #1f2f5a;
+        color: white;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 8px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+
+      /*  I WANT TO SECTION (exact copy from index)  */
+      .actions-section {
+        background-color: #1f2f5a;
+        padding: 40px 20px 50px;
+        text-align: center;
+        width: 100%;
+      }
+      .actions-title {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 28px;
+        font-weight: 400;
+        color: white;
+        margin: 0 0 36px 0;
+        letter-spacing: 0.5px;
+      }
+      .actions-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 48px;
+        flex-wrap: wrap;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .action-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        width: 100px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .action-btn img {
+        width: 64px; height: 64px; object-fit: contain;
+        filter: brightness(0) invert(1);
+      }
+      .action-btn a {
+        font-family: Arial, sans-serif;
+        font-size: 13px;
+        color: white;
+        text-align: center;
+        line-height: 1.4;
+        text-decoration: none;
+        transition: color 0.2s ease, text-decoration 0.2s ease;
+        display: block;
+      }
+      .action-btn a:hover { color: #ffd900; text-decoration: underline; }
+
+      /*  CUSTOM CONTEXT MENU  */
+      .custom-context-menu {
+        display: none;
+        position: fixed;
+        z-index: 99999;
+        background-color: #fffef0;
+        border: 1.5px solid #000000;
+        min-width: 180px;
+        font-family: Arial, sans-serif;
+      }
+      .custom-context-menu a {
+        display: block; padding: 12px 15px;
+        text-decoration: none; color: black;
+        font-weight: 600; font-size: 15px;
+        border-bottom: 1px solid #e8e6d8;
+      }
+      .custom-context-menu a:last-child { border-bottom: none; }
+      .custom-context-menu a:hover { background-color: #f0eedc; }
+
+      /*  VISTA DIALOG  */
+      .vista-overlay {
+        display: none; position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.45); z-index: 999998;
+      }
+      .vista-window {
+        display: none; position: fixed;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 480px; z-index: 999999;
+        border-radius: 8px 8px 6px 6px;
+        box-shadow: 0 0 0 1px #4a6fa5, 0 0 0 2px #1a3a6b, 0 8px 32px rgba(0,0,0,0.6);
+        overflow: hidden;
+        font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      }
+      .vista-titlebar {
+        background: linear-gradient(180deg,#4a90d9 0%,#2a6bbf 40%,#1a52a0 60%,#2a6bbf 100%);
+        padding: 6px 10px;
+        display: flex; align-items: center; justify-content: space-between;
+        border-bottom: 1px solid #1a3a6b;
+      }
+      .vista-titlebar-left { display: flex; align-items: center; gap: 7px; }
+      .vista-titlebar-icon {
+        width: 16px; height: 16px;
+        background: radial-gradient(circle at 35% 35%, #ffffff, #4a90d9);
+        border-radius: 50%; border: 1px solid rgba(255,255,255,0.4);
+      }
+      .vista-titlebar-text { color: white; font-size: 13px; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.5); letter-spacing: 0.3px; }
+      .vista-close {
+        width: 22px; height: 22px; border-radius: 50%;
+        border: 1px solid #8b1a1a;
+        background: radial-gradient(circle at 40% 30%, #ff6b6b, #cc0000 60%, #8b0000);
+        color: white; font-size: 11px; font-weight: bold; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: inset 0 1px 1px rgba(255,255,255,0.3);
+        transition: brightness 0.15s;
+      }
+      .vista-close:hover { filter: brightness(1.2); }
+      .vista-body { background: linear-gradient(180deg, #f0f4fb 0%, #dce6f5 100%); padding: 0; }
+      .vista-content { padding: 20px 22px 16px 22px; border-bottom: 1px solid #b8cce4; }
+      .vista-content-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+      .vista-content-icon {
+        width: 48px; height: 48px; flex-shrink: 0;
+        background: radial-gradient(circle at 35% 30%, #ffffff, #4a90d9 50%, #1a52a0);
+        border-radius: 8px; border: 1px solid #4a6fa5;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        display: flex; align-items: center; justify-content: center; font-size: 26px;
+      }
+      .vista-content-title { font-size: 17px; font-weight: 700; color: #1a3a6b; text-shadow: 0 1px 0 rgba(255,255,255,0.8); }
+      .vista-content-subtitle { font-size: 12px; color: #4a6fa5; margin-top: 2px; }
+      .vista-content p { font-size: 13px; color: #222; line-height: 1.6; margin: 0 0 10px 0; }
+      .vista-footer {
+        background: linear-gradient(180deg, #dce6f5 0%, #c8d8ee 100%);
+        padding: 10px 22px;
+        display: flex; justify-content: flex-end; gap: 8px;
+        border-top: 1px solid #b8cce4;
+      }
+      .vista-btn {
+        padding: 5px 18px; font-size: 13px;
+        font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+        border-radius: 4px; cursor: pointer;
+        border: 1px solid #4a6fa5;
+        background: linear-gradient(180deg, #f0f6ff 0%, #d0e4f8 50%, #b8d0f0 51%, #cce0ff 100%);
+        color: #1a3a6b; font-weight: 600;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 1px 2px rgba(0,0,0,0.15);
+        transition: filter 0.15s;
+      }
+      .vista-btn:hover { filter: brightness(1.07); }
+      .vista-btn-primary {
+        border-color: #1a3a6b;
+        background: linear-gradient(180deg, #4a90d9 0%, #2a6bbf 50%, #1a52a0 51%, #2a70cc 100%);
+        color: white;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 2px rgba(0,0,0,0.3);
+      }
+
+      /*  FOOTER  */
+      .footer { margin-top: auto; background: black; color: white; width: 100%; padding: 20px 0; font-family: Arial, sans-serif; }
+      .footer-inner { width: 95%; margin: auto; display: flex; justify-content: space-between; align-items: flex-start; }
+      .footer-links { display: flex; flex-direction: column; }
+      .footer-row { display: flex; gap: 18px; padding: 10px 0; border-bottom: 1px solid #333; }
+      .footer-row:last-child { border-bottom: none; }
+      .footer-btn { text-decoration: none; color: white; font-size: 13px; letter-spacing: .5px; padding: 2px 4px; transition: color .25s ease; }
+      .footer-btn:hover { color: #ffd900; }
+      .footer-social { margin-top: 12px; display: flex; gap: 10px; }
+      .footer-social img { height: 18px; width: 18px; }
+      .footer-logo { display: flex; align-items: center; gap: 10px; }
+      .footer-logo-img { height: 110px; width: auto; }
+      .footer-text { font-family: Arial, sans-serif; font-size: 15px; color: white; }
+    </style>
+  </head>
+  <body>
+
+    <!-- TOP BANNER -->
+    <div class="banner">
+      <img src="nbeplogo.png" alt="logo">
+      <img class="img2" src="usflag.png" alt="usflag">
+      <p>This is an official site of the NBEP. A non-profit non-government organization.</p>
+      <a class="p2" href="https://sayroahm.github.io/nbep/howyouknow">?</a>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+      <div class="dropdown-logo">
+        <img src="nbeplogo.png" alt="menu">
+        <div class="dropdown-menu">
+          <a href="/">Home</a>
+          <a href="/wanted">Most Wanted</a>
+          <a href="/submit-a-tip">Report Crime</a>
+          <a href="/resources">Resources</a>
+          <a href="/contact-us">Contact</a>
+        </div>
+      </div>
+      <div class="toolbar-nav">
+        <a href="/">Home</a>
+        <a href="/wanted">Most Wanted</a>
+        <a href="/news">News</a>
+        <a href="/info">What We Investigate</a>
+      </div>
+      <div class="toolbar-search">
+        <div class="search-box">
+          <img src="searchicon.png" alt="search">
+          <input type="text" placeholder="Search" id="toolbarSearch">
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div style="flex: 1;">
+
+      <!-- PAGE HERO -->
+      <div class="contact-hero">
+        <h1>Contact the NBEP</h1>
+        <p>Have a question, concern, or need to reach our team? Fill out the form below and a representative will review your message.</p>
+      </div>
+
+      <!-- DISCLAIMER (modified) -->
+      <div class="home-warn">
+        <div class="warn-icon">!</div>
+        <div>
+          <h3>Disclaimer:</h3>
+          <p>We may not always respond to your message, even if we are actively opening or reviewing an investigation related to your case. Due to the volume of submissions and the confidential nature of ongoing investigations, we are unable to provide status updates or confirm receipt of tips. If there is an emergency, call <strong>911</strong> or contact your local law enforcement immediately.</p>
+        </div>
+      </div>
+
+      <!-- CONTACT FORM + SIDEBAR -->
+      <div class="contact-wrapper">
+
+        <!-- FORM -->
+        <div class="contact-form-box">
+          <h2>Send Us a Message</h2>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" placeholder="John">
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" placeholder="Doe">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="you@example.com">
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Subject / Reason for Contact</label>
+            <select id="subject">
+              <option value="" disabled selected>Select a topic...</option>
+              <option value="general">General Inquiry</option>
+              <option value="tip">Follow-Up on a Submitted Tip</option>
+              <option value="volunteer">Volunteering &amp; Careers</option>
+              <option value="software">Software Access</option>
+              <option value="media">Media &amp; Press</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="Type your message here..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <div class="g-recaptcha" data-sitekey="6LelCIQsAAAAAMfs_RiHl2VW8lptn8JM5JwADcC0" data-theme="light"></div>
+          </div>
+
+          <button class="form-submit-btn" id="submitBtn">Submit Message</button>
+
+          <div class="form-success" id="formSuccess">
+            ✔ &nbsp; Your message has been submitted. We will review it as soon as possible.
+          </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="contact-sidebar">
+
+          <div class="sidebar-card">
+            <span class="sidebar-badge">Important</span>
+            <h3>Before You Contact Us</h3>
+            <p>If you have a <strong>tip or report of crime</strong>, please use the <a href="/submit-a-tip">Submit a Tip</a> page. It is processed separately from contact messages.</p>
+            <p>For emergencies, always dial <strong>911</strong>.</p>
+          </div>
+
+          <div class="sidebar-card">
+            <h3>Response Times</h3>
+            <p>Due to the volume of inquiries and the confidential nature of our work, we <strong>cannot guarantee a reply</strong>. Messages are reviewed in the order received.</p>
+          </div>
+
+          <div class="sidebar-card">
+            <h3>Other Ways to Reach Us</h3>
+            <p><a href="/careers">Volunteer Applications</a></p>
+            <p><a href="/software">Request Software Access</a></p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- I WANT TO SECTION -->
+      <div class="actions-section">
+        <p class="actions-title">I Want To</p>
+        <div class="actions-buttons">
+          <div class="action-btn">
+            <img src="imagery/Apply.png" alt="Apply as a Volunteer">
+            <a href="/careers">Apply as a Volunteer</a>
+          </div>
+          <div class="action-btn">
+            <img src="imagery/submittip.png" alt="Submit a Tip">
+            <a href="/submit-a-tip">Submit a Tip</a>
+          </div>
+          <div class="action-btn">
+            <img src="imagery/contactus.png" alt="Contact the NBEP">
+            <a href="/contact-us">Contact the NBEP</a>
+          </div>
+          <div class="action-btn">
+            <img src="imagery/softwaregain.png" alt="Gain Access to NBEP Software">
+            <a href="/contact-us">Gain Access to NBEP Software</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end flex:1 -->
+
+    <!-- VISTA OVERLAY & WINDOW -->
+    <div class="vista-overlay" id="vistaOverlay"></div>
+    <div class="vista-window" id="vistaHelp">
+      <div class="vista-titlebar">
+        <div class="vista-titlebar-left">
+          <div class="vista-titlebar-icon"></div>
+          <span class="vista-titlebar-text">NBEP Help Center</span>
+        </div>
+        <div class="vista-close" id="vistaClose">X</div>
+      </div>
+      <div class="vista-body">
+        <div class="vista-content">
+          <div class="vista-content-header">
+            <div class="vista-content-icon">❔</div>
+            <div>
+              <div class="vista-content-title">NBEP Help Center</div>
+              <div class="vista-content-subtitle">National Bureau of Exploitation Protection</div>
+            </div>
+          </div>
+          <p>Need help? Use the form on this page to send us a message. For tips and crime reports, use the <strong>Submit a Tip</strong> page.</p>
+          <p>Remember: we may not always be able to respond, especially during active investigations. Thank you for your understanding.</p>
+        </div>
+        <div class="vista-footer">
+          <button class="vista-btn" id="vistaCloseBtn">Close</button>
+          <button class="vista-btn vista-btn-primary" onclick="window.location.href='/resources'">View Resources</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <div class="footer-row">
+            <a class="footer-btn" href="/"><span>HOME</span></a>
+            <a class="footer-btn" href="/wanted"><span>MOST WANTED</span></a>
+            <a class="footer-btn" href="/news"><span>NEWS</span></a>
+            <a class="footer-btn" href="/info"><span>WHAT WE INVESTIGATE</span></a>
+          </div>
+          <div class="footer-row">
+            <a class="footer-btn" href="/contact-us"><span>CONTACT US</span></a>
+            <a class="footer-btn"><span>OFFICES</span></a>
+            <a class="footer-btn" href="/software"><span>SOFTWARE</span></a>
+            <a class="footer-btn"><span>DOCUMENTS</span></a>
+          </div>
+          <div class="footer-row">
+            <a class="footer-btn"><span>ARCHIVES</span></a>
+            <a class="footer-btn"><span>DIRECTORS ROSTER</span></a>
+            <a class="footer-btn"><span>HELP</span></a>
+            <a class="footer-btn"><span>ADMINISTRATIVE SERVICES</span></a>
+          </div>
+          <div class="footer-social">
+            <img src="youtube.png" alt="YouTube">
+            <img src="facebook.png" alt="Facebook">
+            <img src="atlassian.png" alt="Atlassian">
+            <img src="x.png" alt="X">
+          </div>
+          <div class="footer-text">
+            <p>NBEP&copy; 2026-2027. All rights reserved.</p>
+          </div>
+        </div>
+        <div class="footer-logo">
+          <img src="nbeplogo.png" class="footer-logo-img" alt="NBEP Logo">
+          <img src="nbep-text.png" class="footer-logo-img" alt="NBEP">
+        </div>
+      </div>
+    </div>
+
+    <!--  FIREBASE MODULE  -->
+    <script type="module">
+      import { initializeApp }  from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+      import { getAnalytics }   from "https://www.gstatic.com/firebasejs/12.10.0/firebase-analytics.js";
+      import { getFirestore, collection, addDoc, serverTimestamp }
+                                from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+      //  Firebase config 
+      const firebaseConfig = {
+        apiKey:            "AIzaSyB6KN09Nx7er5eFYLkCOimWGYLJtwuwXU0",
+        authDomain:        "nbep-5039a.firebaseapp.com",
+        projectId:         "nbep-5039a",
+        storageBucket:     "nbep-5039a.firebasestorage.app",
+        messagingSenderId: "753495624185",
+        appId:             "1:753495624185:web:8245b64f6c374794081528",
+        measurementId:     "G-GRFMK30MVM"
+      };
+
+      const app       = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const db        = getFirestore(app);
+
+      console.log("Version: Lakewood I.167");
+      console.log("Page: Contact Us");
+      console.log("Firebase: Connected to nbep-5039a");
+
+      //  FORM SUBMIT → Firestore 
+      document.getElementById("submitBtn").addEventListener("click", async function () {
+        const first   = document.getElementById("firstName").value.trim();
+        const last    = document.getElementById("lastName").value.trim();
+        const email   = document.getElementById("email").value.trim();
+        const subject = document.getElementById("subject").value;
+        const msg     = document.getElementById("message").value.trim();
+
+        // Validation
+        if (!first || !last || !email || !subject || !msg) {
+          alert("Please fill out all fields before submitting.");
+          return;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          alert("Please enter a valid email address.");
+          return;
+        }
+
+        // reCAPTCHA check
+        const captchaResponse = grecaptcha.getResponse();
+        if (!captchaResponse) {
+          alert("Please complete the reCAPTCHA verification before submitting.");
+          return;
+        }
+
+        // Lock button & show loading state
+        const btn = document.getElementById("submitBtn");
+        btn.disabled    = true;
+        btn.textContent = "Submitting...";
+        btn.style.opacity = "0.65";
+        btn.style.cursor  = "not-allowed";
+
+        try {
+          // Write to Firestore → collection: "messages"
+          await addDoc(collection(db, "messages"), {
+            firstName:   first,
+            lastName:    last,
+            fullName:    `${first} ${last}`,
+            email:       email,
+            subject:     subject,
+            message:     msg,
+            status:      "unread",        // admin workflow field
+            source:      "contact-form",  // distinguish from tip submissions
+            submittedAt: serverTimestamp() // server-side UTC timestamp
+          });
+
+          // Success state
+          document.getElementById("formSuccess").style.display = "block";
+          btn.textContent = "Submitted ✔";
+          console.log("Message submitted to Firestore successfully.");
+
+        } catch (err) {
+          console.error("Firestore write failed:", err);
+          btn.disabled    = false;
+          btn.textContent = "Submit Message";
+          btn.style.opacity = "1";
+          btn.style.cursor  = "pointer";
+          grecaptcha.reset();
+          alert("There was an error submitting your message. Please try again.");
+        }
+      });
+
+      //  CUSTOM CONTEXT MENU 
+      const contextMenu = document.createElement("div");
+      contextMenu.classList.add("custom-context-menu");
+      contextMenu.innerHTML = `
+        <a href="/resources">Resources</a>
+        <a href="#" id="contextHelp">Help</a>
+        <a href="/admin-login">Admin Login</a>
+        <a href="/info">What We Investigate</a>
+      `;
+      document.body.appendChild(contextMenu);
+
+      document.getElementById("contextHelp").addEventListener("click", (e) => {
+        e.preventDefault();
+        contextMenu.style.display = "none";
+        openVista();
+      });
+
+      document.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        contextMenu.style.display = "block";
+        const menuWidth  = contextMenu.offsetWidth;
+        const menuHeight = contextMenu.offsetHeight;
+        const winWidth   = window.innerWidth;
+        const winHeight  = window.innerHeight;
+        contextMenu.style.left = (e.clientX + menuWidth  > winWidth)  ? (winWidth  - menuWidth  - 5) + "px" : e.clientX + "px";
+        contextMenu.style.top  = (e.clientY + menuHeight > winHeight) ? (winHeight - menuHeight - 5) + "px" : e.clientY + "px";
+      });
+
+      document.addEventListener("click",  () => { contextMenu.style.display = "none"; });
+      document.addEventListener("scroll", () => { contextMenu.style.display = "none"; });
+
+      //  VISTA DIALOG 
+      const vistaHelp     = document.getElementById("vistaHelp");
+      const vistaOverlay  = document.getElementById("vistaOverlay");
+      const vistaClose    = document.getElementById("vistaClose");
+      const vistaCloseBtn = document.getElementById("vistaCloseBtn");
+
+      function openVista() {
+        vistaHelp.style.display    = "block";
+        vistaOverlay.style.display = "block";
+      }
+      function closeVista() {
+        vistaHelp.style.display    = "none";
+        vistaOverlay.style.display = "none";
+      }
+
+      vistaClose.addEventListener("click",    closeVista);
+      vistaCloseBtn.addEventListener("click", closeVista);
+      vistaOverlay.addEventListener("click",  closeVista);
+    </script>
+  </body>
+</html>

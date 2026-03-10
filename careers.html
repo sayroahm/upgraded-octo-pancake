@@ -1,0 +1,1076 @@
+<!doctype html>
+<html>
+  <head>
+    <script type="module" src="outageCheck.js"></script>
+    <script src="algorithm.js"></script>
+    <script src="console.js"></script>
+    <link rel="icon" type="image/x-icon" href="nbeplogo.png">
+    <title>NBEP-us.com | Resources</title>
+    <style>
+      html {
+        overflow-x: hidden;
+        max-width: 100%;
+      }
+
+      body {
+        margin: 0px;
+        background-color: #dbd9d3;
+        font-family: Arial;
+        overflow-x: hidden;
+        max-width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      .banner {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        background-color: white;
+      }
+
+      .banner img {
+        margin-left: 8px;
+        margin-right: 4px;
+        height: 1.36em;
+        width: auto;
+      }
+
+      .banner .img2 {
+        margin-left: 4px;
+        margin-right: 4px;
+        height: 1em;
+        width: 25px;
+      }
+
+      .banner p {
+        margin: 4px;
+        font-weight: 500;
+      }
+
+      .banner .p2 {
+        margin-left: 7px;
+        font-weight: 700;
+        text-decoration: underline;
+        color: #000000;
+      }
+
+      .toolbar {
+        background-color: #000000;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        padding: 0 25px;
+        position: relative;
+        box-sizing: border-box;
+        width: 100%;
+      }
+
+      .dropdown-logo {
+        position: relative;
+      }
+
+      .dropdown-logo img {
+        height: 48px;
+        width: auto;
+        border: 2px solid white;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background-color: white;
+        min-width: 200px;
+        border: 2px solid black;
+        z-index: 1000;
+      }
+
+      .dropdown-menu a {
+        display: block;
+        padding: 12px 15px;
+        text-decoration: none;
+        color: black;
+        font-weight: 600;
+      }
+
+      .dropdown-menu a:hover {
+        background-color: #eeeeee;
+      }
+
+      .dropdown-logo:hover .dropdown-menu {
+        display: block;
+      }
+
+      .dropdown-logo::after {
+        content: '';
+        position: absolute;
+        top: 48px;
+        left: 0;
+        width: 100%;
+        height: 12px;
+      }
+
+      .toolbar-nav {
+        display: flex;
+        gap: 60px;
+        margin-left: 60px;
+      }
+
+      .toolbar-nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        border-bottom: 2px solid transparent;
+        padding-bottom: 4px;
+        transition: color 0.25s ease, border-color 0.25s ease;
+      }
+
+      .toolbar-nav a:hover {
+        color: #ffd900;
+        border-bottom: 2px solid #ffd900;
+      }
+
+      .toolbar-search {
+        margin-left: auto;
+        margin-right: 10px;
+      }
+
+      .search-box {
+        display: flex;
+        align-items: center;
+        background: white;
+        border-radius: 20px;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        transition: box-shadow 0.2s ease;
+      }
+
+      .search-box:focus-within {
+        box-shadow: 0 0 0 2px #ffd900;
+      }
+
+      .search-box img {
+        width: 16px;
+        height: 16px;
+        margin-right: 8px;
+        opacity: 0.7;
+      }
+
+      .search-box input {
+        border: none;
+        outline: none;
+        font-size: 14px;
+        width: 185px;
+        font-family: Arial, sans-serif;
+      }
+
+      .home-banner {
+        width: 100%;
+        min-height: 250px;
+        background-image: url("worldmapbanner2.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .home-banner-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .home-banner-text h2,
+      .home-banner-text h4 {
+        color: white;
+        font-family: Arial, sans-serif;
+        margin: 0;
+      }
+
+      .home-banner-text h2 {
+        font-size: 2rem;
+        font-weight: 700;
+      }
+
+      .home-banner-text h4 {
+        font-size: 1.2rem;
+        font-weight: 400;
+        margin-top: 10px;
+      }
+
+      .home-banner-button {
+        margin-top: 55px;
+        font-size: 1.2rem;
+        color: #3C47AF;
+        background-color: #a6e1ff;
+        border: 2px solid white;
+        border-radius: 6px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.2s, transform 0.2s;
+      }
+
+      .home-banner-button:hover {
+        background-color: #7ecfff;
+        transform: translateY(-2px);
+      }
+
+      .home-banner-resources {
+        margin-top: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #000000;
+        text-decoration: none;
+        transition: color 0.25s ease, text-decoration 0.25s ease;
+      }
+
+      .home-banner-resources:hover {
+        color: #ffd900;
+        text-decoration: underline;
+      }
+
+      .home-warn {
+        margin: 30px auto;
+        max-width: 1200px;
+        background-color: #ff6363;
+        border-left: 6px solid #ff8c00;
+        border-radius: 10px;
+        padding: 18px 22px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+
+      .home-warn h3 {
+        margin: 0 0 6px 0;
+        color: #b21818;
+        font-size: 1.25rem;
+        font-weight: 700;
+      }
+
+      .home-warn p {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #333;
+      }
+
+      .warn-icon {
+        background: #b21818;
+        color: white;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+
+      .custom-context-menu {
+        display: none;
+        position: fixed;
+        z-index: 99999;
+        background-color: #fffef0;
+        border: 1.5px solid #000000;
+        min-width: 180px;
+        font-family: Arial, sans-serif;
+      }
+
+      .custom-context-menu a {
+        display: block;
+        padding: 12px 15px;
+        text-decoration: none;
+        color: black;
+        font-weight: 600;
+        font-size: 15px;
+        border-bottom: 1px solid #e8e6d8;
+      }
+
+      .custom-context-menu a:last-child {
+        border-bottom: none;
+      }
+
+      .custom-context-menu a:hover {
+        background-color: #f0eedc;
+      }
+
+      .vista-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 999998;
+      }
+
+      .vista-window {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 480px;
+        z-index: 999999;
+        border-radius: 8px 8px 6px 6px;
+        box-shadow:
+          0 0 0 1px #4a6fa5,
+          0 0 0 2px #1a3a6b,
+          0 8px 32px rgba(0, 0, 0, 0.6);
+        overflow: hidden;
+        font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      }
+
+      .vista-titlebar {
+        background: linear-gradient(180deg,
+          #4a90d9 0%,
+          #2a6bbf 40%,
+          #1a52a0 60%,
+          #2a6bbf 100%
+        );
+        padding: 6px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #1a3a6b;
+      }
+
+      .vista-titlebar-left {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+
+      .vista-titlebar-icon {
+        width: 16px;
+        height: 16px;
+        background: radial-gradient(circle at 35% 35%, #ffffff, #4a90d9);
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+      }
+
+      .vista-titlebar-text {
+        color: white;
+        font-size: 13px;
+        font-weight: 600;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        letter-spacing: 0.3px;
+      }
+
+      .vista-close {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 1px solid #8b1a1a;
+        background: radial-gradient(circle at 40% 30%,
+          #ff6b6b,
+          #cc0000 60%,
+          #8b0000
+        );
+        color: white;
+        font-size: 11px;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3);
+        transition: brightness 0.15s;
+      }
+
+      .vista-close:hover {
+        filter: brightness(1.2);
+      }
+
+      .vista-body {
+        background: linear-gradient(180deg, #f0f4fb 0%, #dce6f5 100%);
+        padding: 0;
+      }
+
+      .vista-content {
+        padding: 20px 22px 16px 22px;
+        border-bottom: 1px solid #b8cce4;
+      }
+
+      .vista-content-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 14px;
+      }
+
+      .vista-content-icon {
+        width: 48px;
+        height: 48px;
+        flex-shrink: 0;
+        background: radial-gradient(circle at 35% 30%,
+          #ffffff,
+          #4a90d9 50%,
+          #1a52a0
+        );
+        border-radius: 8px;
+        border: 1px solid #4a6fa5;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+      }
+
+      .vista-content-title {
+        font-size: 17px;
+        font-weight: 700;
+        color: #1a3a6b;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+      }
+
+      .vista-content-subtitle {
+        font-size: 12px;
+        color: #4a6fa5;
+        margin-top: 2px;
+      }
+
+      .vista-content p {
+        font-size: 13px;
+        color: #222;
+        line-height: 1.6;
+        margin: 0 0 10px 0;
+      }
+
+      .vista-content ul {
+        margin: 0 0 10px 0;
+        padding-left: 20px;
+      }
+
+      .vista-content ul li {
+        font-size: 13px;
+        color: #222;
+        line-height: 1.8;
+      }
+
+      .vista-footer {
+        background: linear-gradient(180deg, #dce6f5 0%, #c8d8ee 100%);
+        padding: 10px 22px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        border-top: 1px solid #b8cce4;
+      }
+
+      .vista-btn {
+        padding: 5px 18px;
+        font-size: 13px;
+        font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+        border-radius: 4px;
+        cursor: pointer;
+        border: 1px solid #4a6fa5;
+        background: linear-gradient(180deg,
+          #f0f6ff 0%,
+          #d0e4f8 50%,
+          #b8d0f0 51%,
+          #cce0ff 100%
+        );
+        color: #1a3a6b;
+        font-weight: 600;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.7),
+          0 1px 2px rgba(0, 0, 0, 0.15);
+        transition: filter 0.15s;
+      }
+
+      .vista-btn:hover {
+        filter: brightness(1.07);
+      }
+
+      .vista-btn-primary {
+        border-color: #1a3a6b;
+        background: linear-gradient(180deg,
+          #4a90d9 0%,
+          #2a6bbf 50%,
+          #1a52a0 51%,
+          #2a70cc 100%
+        );
+        color: white;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.3),
+          0 1px 2px rgba(0, 0, 0, 0.3);
+      }
+
+      .folder-cards {
+        display: flex;
+        gap: 28px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 30px auto;
+        max-width: 1200px;
+        padding: 0 20px;
+      }
+
+      .folder-card {
+        background-color: #fffef0;
+        border: 2px solid #000000;
+        width: 200px;
+        padding: 18px 16px 14px 16px;
+        cursor: pointer;
+        font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        user-select: none;
+        transition: background-color 0.05s;
+        box-shadow: 3px 3px 0px #000000;
+      }
+
+      .folder-card:hover {
+        background-color: #f0eedc;
+      }
+
+      .folder-card:active {
+        box-shadow: 1px 1px 0px #000000;
+        transform: translate(2px, 2px);
+      }
+
+      .folder-icon {
+        font-size: 52px;
+        line-height: 1;
+      }
+
+      .folder-icon img {
+        width: 52px;
+        height: 52px;
+        object-fit: contain;
+      }
+
+      .folder-label {
+        font-size: 13px;
+        font-weight: 700;
+        color: #1a1a1a;
+        text-align: center;
+        letter-spacing: 0.3px;
+      }
+
+      .footer{
+        margin-top:auto;
+        background:black;
+        color:white;
+        width:100%;
+        padding:20px 0;
+        font-family:Arial, sans-serif;
+      }
+
+      .footer-inner{
+        width:95%;
+        margin:auto;
+        display:flex;
+        justify-content:space-between;
+        align-items:flex-start;
+      }
+
+      .footer-links{
+        display:flex;
+        flex-direction:column;
+      }
+
+      .footer-row{
+        display:flex;
+        gap:18px;
+        padding:10px 0;
+        border-bottom:1px solid #333;
+      }
+
+      .footer-row:last-child{
+        border-bottom:none;
+      }
+
+      .footer-btn{
+        text-decoration:none;
+        color:white;
+        font-size:13px;
+        letter-spacing:.5px;
+        padding:2px 4px;
+        transition:color .25s ease;
+      }
+
+      .footer-btn:hover{
+        color:#ffd900;
+      }
+
+      .footer-social{
+        margin-top:12px;
+        display:flex;
+        gap:10px;
+      }
+
+      .footer-social img{
+        height:18px;
+        width:18px;
+      }
+
+      .footer-logo{
+        display:flex;
+        align-items:center;
+        gap:10px;
+      }
+
+      .footer-logo-img{
+        height:110px;
+        width:auto;
+      }
+      
+      .footer-text{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size:20px;
+        color:white;
+      }
+
+      /* Careers Box */
+
+      .careers-section{
+        width:80%;
+        margin:auto;
+        display:flex;
+        flex-direction:column;
+        gap:40px;
+        padding-top:40px;
+      }
+
+      .career-box{
+        background:#1f2f5a;
+        padding:30px;
+        border-radius:8px;
+        color:white;
+        text-align:center;
+        box-shadow:0px 6px 14px rgba(0,0,0,0.25);
+      }
+
+      .career-title{
+        font-size:26px;
+        font-weight:bold;
+        margin-bottom:10px;
+      }
+
+      .career-description{
+        font-size:16px;
+        max-width:700px;
+        margin:auto;
+        margin-bottom:20px;
+        line-height:1.6;
+      }
+
+      .career-seperator{
+        width:60%;
+        height:2px;
+        background:#8d8d8d;
+        margin:20px auto;
+      }
+
+      .career-apply-btn{
+        background:white;
+        color:#1f2f5a;
+        padding:10px 22px;
+        border-radius:5px;
+        text-decoration:none;
+        font-weight:bold;
+        transition:all 0.25s ease;
+      }
+
+      .career-apply-btn:hover{
+        background:#d7d7d7;
+        transform:translateY(-3px);
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div class="banner"> 
+      <img src="nbeplogo.png" alt="logo"> 
+      <img class="img2" src="usflag.png" alt="usflag">
+      <p>This is an official site of the NBEP. A non-profit non-government organization.</p> 
+      <a class="p2" href="/howyouknow">?</a>
+    </div>
+
+    <div class="toolbar">
+      <div class="dropdown-logo">
+        <img src="nbeplogo.png" alt="NBEP Logo">
+        <div class="dropdown-menu">
+          <a href="/resources">Home</a>
+          <a href="/info">Most Wanted</a>
+          <a href="/admin-login">Report Crime</a>
+          <a href="/resources">Resources</a>
+          <a href="/contact-us">Contact</a>
+        </div>
+      </div>
+      <nav class="toolbar-nav">
+        <a href="/">Home</a>
+        <a href="/wanted">Most Wanted</a>
+        <a href="/news">News</a>
+        <a href="/info">What We Investigate</a>
+      </nav>
+      <div class="toolbar-search">
+        <div class="search-box">
+          <img src="searchicon.png" alt="search">
+          <input type="text" placeholder="Search" id="toolbarSearch">
+        </div>
+      </div>
+    </div>
+
+    <div class="home-warn">
+      <div class="warn-icon">!</div>
+      <h3>WARNING:</h3>
+      <p>
+        The following careers that are listed are simply volunteerable jobs.
+        If pressing apply does not go to your default emailing provider,
+        you might have to manually email nbeporganizationgmail@gmail.com.
+      </p>
+    </div>
+
+    <div class="careers-section">
+
+      <div class="career-box">
+        <div class="career-title">Software Developer</div>
+
+        <div class="career-separator"></div>
+
+        <div class="career-description">
+          Create our development tools, work with websites.
+          Languages: C, C#, C++, Python, HTML, JS, CSS, etc..
+        </div>
+
+        <a class="career-apply-btn"
+           href="mailto:nbeporganizationgmail@gmail.com?subject=Career%20Apply&body=Career%20Applying%20For:%20Software%20Developer%0A%0ADescription%20of%20experience:%0A%0A%0ADisclaimer:%20Someone%20from%20our%20team%20will%20review%20your%20information%20and%20email%20you%20back%20to%20schedule%20an%20interview.">
+           Apply
+        </a>
+      </div>
+
+
+      <div class="career-box">
+        <div class="career-title">Co-Director</div>
+
+        <div class="career-separator"></div>
+
+        <div class="career-description">
+          Assist with the Director when situations happen
+          that involve higher authorities. Also help the PR
+          of NBEP.
+        </div>
+
+        <a class="career-apply-btn"
+           href="mailto:nbeporganizationgmail@gmail.com?subject=Career%20Apply&body=Career%20Applying%20For:%20Co-Director%0A%0ADescription%20of%20experience:%0A%0A%0ADisclaimer:%20Someone%20from%20our%20team%20will%20review%20your%20information%20and%20email%20you%20back%20to%20schedule%20an%20interview.">
+           Apply
+        </a>
+      </div>
+
+    </div>
+
+    <div class="vista-overlay" id="vistaOverlay"></div>
+
+    <div class="vista-window" id="vistaHelp">
+      <div class="vista-titlebar">
+        <div class="vista-titlebar-left">
+          <div class="vista-titlebar-icon"></div>
+          <span class="vista-titlebar-text">NBEP Help Center</span>
+        </div>
+        <div class="vista-close" id="vistaClose">X</div>
+      </div>
+      <div class="vista-body">
+        <div class="vista-content">
+          <div class="vista-content-header">
+            <div class="vista-content-icon">❔</div>
+            <div>
+              <div class="vista-content-title">NBEP Help Center</div>
+              <div class="vista-content-subtitle">National Bureau of Exploitation Protection</div>
+            </div>
+          </div>
+          <p>
+            Welcome to NBEP Resources center. NBEP is a
+            <strong>non-profit non-government</strong> agency designed
+            to report <strong>cybercrimes</strong> to proper authorities.
+          </p>
+          <p>Here is what you can do on this site:</p>
+          <ul>
+            <li>Browse <strong>Resources</strong> to help victims</li>
+            <li>Find <strong>Website Sources</strong> to view code</li>
+            <li>Find the best <strong>solution</strong> to your problems</li>
+            <li>Learn <strong>what you can do</strong> to help</li>
+          </ul>
+          <div class="home-warn">
+            <div class="warn-icon">ℹ</div>
+            <h3>Info:</h3>
+            <p>
+              This site does not involve any form of cookie logging, IP logging, etc..
+              Your privacy matters, and we do nothing with any information of yours.
+              You may view our resources as a form of proof and review code of our page.
+            </p>
+          </div>
+        </div>
+        <div class="vista-footer">
+          <button class="vista-btn" id="vistaCloseBtn">Close</button>
+          <button class="vista-btn vista-btn-primary"
+            onclick="window.location.href='/nbep/resources'">
+            View Resources
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="vista-window" id="folderVistaWindow">
+      <div class="vista-titlebar">
+        <div class="vista-titlebar-left">
+          <div class="vista-titlebar-icon"></div>
+          <span class="vista-titlebar-text" id="folderVistaTitle">NBEP</span>
+        </div>
+        <div class="vista-close" id="folderVistaClose">X</div>
+      </div>
+      <div class="vista-body">
+        <div class="vista-content" id="folderVistaContent">
+        </div>
+        <div class="vista-footer">
+          <button class="vista-btn" id="folderVistaCloseBtn">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer -->
+
+<div class="footer">
+
+<div class="footer-inner">
+
+<div class="footer-links">
+
+<div class="footer-row">
+<a class="footer-btn"><span>HOME</span></a>
+<a class="footer-btn"><span>MOST WANTED</span></a>
+<a class="footer-btn"><span>NEWS</span></a>
+<a class="footer-btn"><span>WHAT WE INVESTIGATE</span></a>
+</div>
+
+<div class="footer-row">
+<a class="footer-btn"><span>CONTACT US</span></a>
+<a class="footer-btn"><span>OFFICES</span></a>
+<a class="footer-btn"><span>SOFTWARE</span></a>
+<a class="footer-btn"><span>DOCUMENTS</span></a>
+</div>
+
+<div class="footer-row">
+<a class="footer-btn"><span>ARCHIVES</span></a>
+<a class="footer-btn"><span>DIRECTORS ROSTER</span></a>
+<a class="footer-btn"><span>HELP</span></a>
+<a class="footer-btn"><span>ADMINISTRATIVE SERVICES</span></a>
+</div>
+
+<div class="footer-social">
+<img src="youtube.png">
+<img src="facebook.png">
+<img src="atlassian.png">
+<img src="x.png">
+</div>
+<div class="footer-text">
+NBEP 2026-2027. All rights reserved.
+</div>
+
+</div>
+
+<div class="footer-logo">
+  <img src="nbeplogo.png" class="footer-logo-img">
+  <img src="nbep-text.png" class="footer-logo-img">
+</div>
+
+</div>
+</div>
+
+    <script>
+      console.log("Version: Lakewood I.127");
+      console.log("Bug Report: Typos.");
+
+      const vistaHelp      = document.getElementById("vistaHelp");
+      const vistaOverlay   = document.getElementById("vistaOverlay");
+      const vistaClose     = document.getElementById("vistaClose");
+      const vistaCloseBtn  = document.getElementById("vistaCloseBtn");
+
+      const folderVistaWindow  = document.getElementById("folderVistaWindow");
+      const folderVistaTitle   = document.getElementById("folderVistaTitle");
+      const folderVistaContent = document.getElementById("folderVistaContent");
+      const folderVistaClose   = document.getElementById("folderVistaClose");
+      const folderVistaCloseBtn = document.getElementById("folderVistaCloseBtn");
+
+      const contextMenu = document.createElement("div");
+      contextMenu.classList.add("custom-context-menu");
+      contextMenu.innerHTML = `
+        <a href="/nbep/resources">Resources</a>
+        <a href="#" id="contextHelp">Help</a>
+        <a href="/nbep/admin-login">Admin Login</a>
+        <a href="/nbep/info">What We Investigate</a>
+      `;
+      document.body.appendChild(contextMenu);
+
+      document.getElementById("contextHelp").addEventListener("click", (e) => {
+        e.preventDefault();
+        contextMenu.style.display = "none";
+        openVista();
+      });
+
+      document.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        contextMenu.style.display = "block";
+
+        const menuWidth  = contextMenu.offsetWidth;
+        const menuHeight = contextMenu.offsetHeight;
+        const winWidth   = window.innerWidth;
+        const winHeight  = window.innerHeight;
+
+        contextMenu.style.left = (e.clientX + menuWidth  > winWidth)
+          ? (winWidth  - menuWidth  - 5) + "px"
+          : e.clientX + "px";
+
+        contextMenu.style.top  = (e.clientY + menuHeight > winHeight)
+          ? (winHeight - menuHeight - 5) + "px"
+          : e.clientY + "px";
+      });
+
+      document.addEventListener("click",  () => { contextMenu.style.display = "none"; });
+      document.addEventListener("scroll", () => { contextMenu.style.display = "none"; });
+
+      const folderData = {
+        tools: {
+          title: "Software Utilities Used",
+          icon: "<img src='exelogo.png' alt='icon' style='width:48px;height:48px;object-fit:contain;'>",
+          heading: "Our Tools & Software Infrastructure",
+          subtitle: "NBEP IT Stack",
+          body: `
+            <p>NBEP uses a variety of software and websites to support the infrastructure of the organization.</p>
+            <ul>
+              <li><strong>Felix</strong> - Core for cyber security and logging.</li>
+              <li><strong>Google Dorks</strong> - Revealing info that hasn't been seen before for investigations.</li>
+              <li><strong>Github</strong> - Making websites, allowing for open source content.</li>
+              <li><strong>Triage</strong> - Virtual Machine for hiding IP.</li>
+              <li><strong>SpiderFoot</strong> - Automates OSINT.</li>
+              <li><strong>Mitaka</strong> - Finding targets more easily.</li>
+            </ul>
+            <p>All tools are used within compliance of victim privacy, and laws.</p>
+          `
+        },
+        cope: {
+          title: "How To Cope",
+          icon: "<img src='copesymbol.png' alt='icon' style='width:48px;height:48px;object-fit:contain;'>",
+          heading: "Coping with Trauma",
+          subtitle: "Resources for Survivors",
+          body: `
+            <p>If you have experienced sexual assult, online grooming, or victim to CSAM/CP/RP content, you aren't alone. Many others have dealed with the same thing, and coping can help with trauma.</p>
+            <ul>
+              <li><strong>Suicide & Crisis Lifeline</strong> - Call or text 988. You aren't alone.</li>
+              <li><strong>RAINN</strong> - RAINN.org | 1-800-656-HOPE (4673).</li>
+              <li><strong>Crisis Text Line</strong> - Text HOME to 741741.</li>
+              <li><strong>Therapy</strong> - Sign up for a local therapist for your trauma to a licensed therapist.</li>
+            </ul>
+            <p>Coping can help with trauma. You aren't alone.</p>
+          `
+        },
+        consult: {
+          title: "Consulting Help",
+          icon: "<img src='consultsymbol.png' alt='icon' style='width:48px;height:48px;object-fit:contain;'>",
+          heading: "Get Direct Help",
+          subtitle: "Reach Out",
+          body: `
+            <p>If you need assistance with trauma, or in immediate harm, please consider the following:</p>
+            <ul>
+              <li><strong>Call 911</strong> - In threat of immediate harm, call 911.</li>
+              <li><strong>FBI/IC3</strong> - A trustable source to report crimes against you.</li>
+              <li><strong>NCMEC CyberTipline</strong> - National Center for Missing and Exploited Children. Consult help to a professional at this organization.</li>
+              <li><strong>NBEP</strong> - We can help you get a possible case.</li>
+            </ul>
+            <p>Reports made via our tipline will raise the chance of a case.</p>
+          `
+        }
+      };
+
+      function openFolderVista(type) {
+        const data = folderData[type];
+        if (!data) return;
+
+        folderVistaTitle.textContent = data.title;
+        folderVistaContent.innerHTML = `
+          <div class="vista-content-header">
+            <div class="vista-content-icon">${data.icon}</div>
+            <div>
+              <div class="vista-content-title">${data.heading}</div>
+              <div class="vista-content-subtitle">${data.subtitle}</div>
+            </div>
+          </div>
+          ${data.body}
+        `;
+
+        folderVistaWindow.style.display = "block";
+        folderVistaWindow.style.position = "fixed";
+        folderVistaWindow.style.top = "-300px";
+        folderVistaWindow.style.left = "50%";
+        folderVistaWindow.style.transform = "translateX(-50%)";
+        vistaOverlay.style.display = "block";
+
+        const steps = [
+          { top: "-300px" },
+          { top: "10px" },
+          { top: "-40px" },
+          { top: "20px" },
+          { top: "-10px" },
+          { top: "50%", transform: "translate(-50%, -50%)" }
+        ];
+
+        let i = 0;
+        const jank = setInterval(() => {
+          if (i >= steps.length) {
+            clearInterval(jank);
+            return;
+          }
+          folderVistaWindow.style.top = steps[i].top;
+          folderVistaWindow.style.transform = steps[i].transform || "translateX(-50%)";
+          i++;
+        }, 80);
+      }
+
+      function closeFolderVista() {
+        folderVistaWindow.style.display = "none";
+        vistaOverlay.style.display = "none";
+      }
+
+      function openVista() {
+        vistaHelp.style.display    = "block";
+        vistaOverlay.style.display = "block";
+      }
+
+      function closeVista() {
+        vistaHelp.style.display    = "none";
+        vistaOverlay.style.display = "none";
+      }
+
+      folderVistaClose.addEventListener("click", closeFolderVista);
+      folderVistaCloseBtn.addEventListener("click", closeFolderVista);
+      vistaClose.addEventListener("click", closeVista);
+      vistaCloseBtn.addEventListener("click", closeVista);
+      vistaOverlay.addEventListener("click", () => {
+        if (folderVistaWindow.style.display === "block") closeFolderVista();
+        else closeVista();
+      });
+    </script>
+
+  </body>
+</html>

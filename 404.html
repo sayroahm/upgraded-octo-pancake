@@ -1,0 +1,629 @@
+<!--<!doctype html>
+<html>
+  <head>
+    <title>404 - Page not found.</title>
+  </head>
+  <body>
+    <h2>404 - Page not found</h2>
+    <p>Please check the URL for any typos, or the page may not be live to public yet.</p>
+    <button onclick="window.location.href='https://sayroahm.github.io/nbep/'">Main page</button>
+  </body>
+</html>
+-->
+
+<!doctype html>
+<html>
+  <head>
+    <link rel="icon" type="image/x-icon" href="nbeplogo.png">
+    <title>NBEP-us.com | 404 Not Found</title>
+    <style>
+      html {
+        overflow-x: hidden;
+        max-width: 100%;
+      }
+
+      body {
+        margin: 0px;
+        background-color: #dbd9d3;
+        font-family: Arial;
+        overflow-x: hidden;
+        max-width: 100%;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      .banner {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        background-color: white;
+      }
+
+      .banner img {
+        margin-left: 8px;
+        margin-right: 4px;
+        height: 1.36em;
+        width: auto;
+      }
+
+      .banner .img2 {
+        margin-left: 4px;
+        margin-right: 4px;
+        height: 1em;
+        width: 25px;
+      }
+
+      .banner p {
+        margin: 4px;
+        font-weight: 500;
+      }
+
+      .banner .p2 {
+        margin-left: 7px;
+        font-weight: 700;
+        text-decoration: underline;
+        color: #000000;
+      }
+
+      .toolbar {
+        background-color: #000000;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        padding: 0 25px;
+        position: relative;
+        box-sizing: border-box;
+        width: 100%;
+      }
+
+      .dropdown-logo {
+        position: relative;
+      }
+
+      .dropdown-logo::after {
+        content: '';
+        position: absolute;
+        top: 48px;
+        left: 0;
+        width: 100%;
+        height: 12px;
+      }
+
+      .dropdown-logo img {
+        height: 48px;
+        width: auto;
+        border: 2px solid white;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background-color: white;
+        min-width: 200px;
+        border: 2px solid black;
+        z-index: 1000;
+      }
+
+      .dropdown-menu a {
+        display: block;
+        padding: 12px 15px;
+        text-decoration: none;
+        color: black;
+        font-weight: 600;
+      }
+
+      .dropdown-menu a:hover {
+        background-color: #eeeeee;
+      }
+
+      .dropdown-logo:hover .dropdown-menu {
+        display: block;
+      }
+
+      .toolbar-nav {
+        display: flex;
+        gap: 60px;
+        margin-left: 60px;
+      }
+
+      .toolbar-nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        border-bottom: 2px solid transparent;
+        padding-bottom: 4px;
+        transition: color 0.25s ease, border-color 0.25s ease;
+      }
+
+      .toolbar-nav a:hover {
+        color: #ffd900;
+        border-bottom: 2px solid #ffd900;
+      }
+
+      .toolbar-search {
+        margin-left: auto;
+        margin-right: 10px;
+      }
+
+      .search-box {
+        display: flex;
+        align-items: center;
+        background: white;
+        border-radius: 20px;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        transition: box-shadow 0.2s ease;
+      }
+
+      .search-box:focus-within {
+        box-shadow: 0 0 0 2px #ffd900;
+      }
+
+      .search-box img {
+        width: 16px;
+        height: 16px;
+        margin-right: 8px;
+        opacity: 0.7;
+      }
+
+      .search-box input {
+        border: none;
+        outline: none;
+        font-size: 14px;
+        width: 185px;
+        font-family: Arial, sans-serif;
+      }
+
+      .error-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 80px 20px;
+        text-align: center;
+      }
+
+      .error-code {
+        font-size: 10rem;
+        font-weight: 900;
+        color: #111;
+        letter-spacing: -4px;
+        line-height: 1;
+        margin: 0;
+        border-bottom: 6px solid #ff8c00;
+        padding-bottom: 10px;
+      }
+
+      .error-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #222;
+        margin: 24px 0 10px 0;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+      }
+
+      .error-subtitle {
+        font-size: 1rem;
+        color: #555;
+        max-width: 500px;
+        line-height: 1.6;
+        margin: 0 0 36px 0;
+      }
+
+      .error-btn {
+        font-size: 1rem;
+        font-weight: 700;
+        color: white;
+        background-color: #111;
+        border: 2px solid #ff8c00;
+        border-radius: 6px;
+        padding: 12px 28px;
+        cursor: pointer;
+        text-decoration: none;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: background-color 0.2s, color 0.2s;
+      }
+
+      .error-btn:hover {
+        background-color: #ff8c00;
+        color: white;
+      }
+
+      .custom-context-menu {
+        display: none;
+        position: fixed;
+        z-index: 99999;
+        background-color: #fffef0;
+        border: 1.5px solid #000000;
+        min-width: 180px;
+        font-family: Arial, sans-serif;
+      }
+
+      .custom-context-menu a {
+        display: block;
+        padding: 12px 15px;
+        text-decoration: none;
+        color: black;
+        font-weight: 600;
+        font-size: 15px;
+        border-bottom: 1px solid #e8e6d8;
+      }
+
+      .custom-context-menu a:last-child {
+        border-bottom: none;
+      }
+
+      .custom-context-menu a:hover {
+        background-color: #f0eedc;
+      }
+
+      .home-warn {
+        margin: 30px auto;
+        max-width: 1200px;
+        background-color: #fff7e6;
+        border-left: 6px solid #ff8c00;
+        border-radius: 10px;
+        padding: 18px 22px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+
+      .home-warn h3 {
+        margin: 0 0 6px 0;
+        color: #ff8c00;
+        font-size: 1.25rem;
+        font-weight: 700;
+      }
+
+      .home-warn p {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #333;
+      }
+
+      .warn-icon {
+        background: #ff8c00;
+        color: white;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+
+      .vista-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 999998;
+      }
+
+      .vista-window {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 480px;
+        z-index: 999999;
+        border-radius: 8px 8px 6px 6px;
+        box-shadow:
+          0 0 0 1px #4a6fa5,
+          0 0 0 2px #1a3a6b,
+          0 8px 32px rgba(0, 0, 0, 0.6);
+        overflow: hidden;
+        font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      }
+
+      .vista-titlebar {
+        background: linear-gradient(180deg,
+          #4a90d9 0%,
+          #2a6bbf 40%,
+          #1a52a0 60%,
+          #2a6bbf 100%
+        );
+        padding: 6px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #1a3a6b;
+      }
+
+      .vista-titlebar-left {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+
+      .vista-titlebar-icon {
+        width: 16px;
+        height: 16px;
+        background: radial-gradient(circle at 35% 35%, #ffffff, #4a90d9);
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+      }
+
+      .vista-titlebar-text {
+        color: white;
+        font-size: 13px;
+        font-weight: 600;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        letter-spacing: 0.3px;
+      }
+
+      .vista-close {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 1px solid #8b1a1a;
+        background: radial-gradient(circle at 40% 30%,
+          #ff6b6b,
+          #cc0000 60%,
+          #8b0000
+        );
+        color: white;
+        font-size: 11px;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3);
+        transition: brightness 0.15s;
+      }
+
+      .vista-close:hover {
+        filter: brightness(1.2);
+      }
+
+      .vista-body {
+        background: linear-gradient(180deg, #f0f4fb 0%, #dce6f5 100%);
+        padding: 0;
+      }
+
+      .vista-content {
+        padding: 20px 22px 16px 22px;
+        border-bottom: 1px solid #b8cce4;
+      }
+
+      .vista-content-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 14px;
+      }
+
+      .vista-content-icon {
+        width: 48px;
+        height: 48px;
+        flex-shrink: 0;
+        background: radial-gradient(circle at 35% 30%,
+          #ffffff,
+          #4a90d9 50%,
+          #1a52a0
+        );
+        border-radius: 8px;
+        border: 1px solid #4a6fa5;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+      }
+
+      .vista-content-title {
+        font-size: 17px;
+        font-weight: 700;
+        color: #1a3a6b;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+      }
+
+      .vista-content-subtitle {
+        font-size: 12px;
+        color: #4a6fa5;
+        margin-top: 2px;
+      }
+
+      .vista-content p {
+        font-size: 13px;
+        color: #222;
+        line-height: 1.6;
+        margin: 0 0 10px 0;
+      }
+
+      .vista-content ul {
+        margin: 0 0 10px 0;
+        padding-left: 20px;
+      }
+
+      .vista-content ul li {
+        font-size: 13px;
+        color: #222;
+        line-height: 1.8;
+      }
+
+      .vista-footer {
+        background: linear-gradient(180deg, #dce6f5 0%, #c8d8ee 100%);
+        padding: 10px 22px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        border-top: 1px solid #b8cce4;
+      }
+
+      .vista-btn {
+        padding: 5px 18px;
+        font-size: 13px;
+        font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+        border-radius: 4px;
+        cursor: pointer;
+        border: 1px solid #4a6fa5;
+        background: linear-gradient(180deg,
+          #f0f6ff 0%,
+          #d0e4f8 50%,
+          #b8d0f0 51%,
+          #cce0ff 100%
+        );
+        color: #1a3a6b;
+        font-weight: 600;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.7),
+          0 1px 2px rgba(0, 0, 0, 0.15);
+        transition: filter 0.15s;
+      }
+
+      .vista-btn:hover {
+        filter: brightness(1.07);
+      }
+
+      .vista-btn-primary {
+        border-color: #1a3a6b;
+        background: linear-gradient(180deg,
+          #4a90d9 0%,
+          #2a6bbf 50%,
+          #1a52a0 51%,
+          #2a70cc 100%
+        );
+        color: white;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.3),
+          0 1px 2px rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="banner"> <img src="nbeplogo.png" alt="logo"> <img class="img2" src="usflag.png" alt="usflag"> <p>This is an official site of the NBEP. A non-profit non-government organization.</p> <a class="p2" href="/howyouknow">?</a></div>
+    <div class="toolbar"> <div class="dropdown-logo"> <img src="nbeplogo.png" alt="menu"> <div class="dropdown-menu"> <a href="#">Home</a> <a href="/wanted">Most Wanted</a> <a href="/submit-a-tip">Report Crime</a> <a href="/resources">Resources</a> <a href="/contact-us">Contact</a></div></div>
+      <div class="toolbar-nav"> <a href="/">Home</a> <a href="/wanted">Most Wanted</a> <a href="/news">News</a> <a href="/info">What We Investigate</a></div>
+      <div class="toolbar-search"><div class="search-box"><img src="searchicon.png" alt="search"> <input type="text" placeholder="Search" id="toolbarSearch"></div></div></div>
+
+    <div class="error-container">
+      <p class="error-code">404</p>
+      <p class="error-title">Page Not Found</p>
+      <p class="error-subtitle">The page you are looking for does not exist, was removed, or the URL may be incorrect.</p>
+      <a class="error-btn" href="/">Return Home</a>
+    </div>
+
+    <div class="vista-overlay" id="vistaOverlay"></div>
+
+    <div class="vista-window" id="vistaHelp">
+      <div class="vista-titlebar">
+        <div class="vista-titlebar-left">
+          <div class="vista-titlebar-icon"></div>
+          <span class="vista-titlebar-text">NBEP Help Center</span>
+        </div>
+        <div class="vista-close" id="vistaClose">X</div>
+      </div>
+
+      <div class="vista-body">
+        <div class="vista-content">
+          <div class="vista-content-header">
+            <div class="vista-content-icon">❔</div>
+            <div>
+              <div class="vista-content-title">NBEP Help Center</div>
+              <div class="vista-content-subtitle">National Bureau of Exploitation Protection</div>
+            </div>
+          </div>
+
+          <p>Welcome to the NBEP Help Center. NBEP is a <strong>non-profit non-government</strong> agency designed to report <strong>cybercrimes</strong> to proper authorities.</p>
+
+          <p>Here is what you can do on this site:</p>
+
+          <ul>
+            <li>Browse <strong>Resources</strong> to help victims</li>
+            <li>Submit an anonymous tip via <strong>Report Crime</strong></li>
+            <li>Read the latest <strong>News</strong> and updates</li>
+            <li>Learn <strong>What We Investigate</strong></li>
+          </ul>
+
+          <div class="home-warn">
+            <div class="warn-icon">ℹ</div>
+            <h3>Info:</h3>
+            <p>This site does not involve any form of cookie logging, IP logging, etc.. Your privacy matters, and we do nothing with any information of yours.</p>
+          </div>
+        </div>
+
+        <div class="vista-footer">
+          <button class="vista-btn" id="vistaCloseBtn">Close</button>
+          <button class="vista-btn vista-btn-primary" onclick="window.location.href='/resources'">View Resources</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      console.log("Version: Lakewood I.112");
+      console.log("Bug Report:");
+
+      const contextMenu = document.createElement("div");
+      contextMenu.classList.add("custom-context-menu");
+      contextMenu.innerHTML = `
+        <a href="/resources">Resources</a>
+        <a href="#" id="contextHelp">Help</a>
+        <a href="/admin-login">Admin Login</a>
+        <a href="/info">What We Investigate</a>
+      `;
+      document.body.appendChild(contextMenu);
+
+      document.getElementById("contextHelp").addEventListener("click", (e) => {
+        e.preventDefault();
+        contextMenu.style.display = "none";
+        openVista();
+      });
+
+      document.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        contextMenu.style.display = "block";
+
+        const menuWidth  = contextMenu.offsetWidth;
+        const menuHeight = contextMenu.offsetHeight;
+        const winWidth   = window.innerWidth;
+        const winHeight  = window.innerHeight;
+
+        contextMenu.style.left = (e.clientX + menuWidth  > winWidth)  ? (winWidth  - menuWidth  - 5) + "px" : e.clientX + "px";
+        contextMenu.style.top  = (e.clientY + menuHeight > winHeight) ? (winHeight - menuHeight - 5) + "px" : e.clientY + "px";
+      });
+
+      document.addEventListener("click",  () => { contextMenu.style.display = "none"; });
+      document.addEventListener("scroll", () => { contextMenu.style.display = "none"; });
+
+      const vistaHelp     = document.getElementById("vistaHelp");
+      const vistaOverlay  = document.getElementById("vistaOverlay");
+      const vistaClose    = document.getElementById("vistaClose");
+      const vistaCloseBtn = document.getElementById("vistaCloseBtn");
+
+      function openVista() {
+        vistaHelp.style.display    = "block";
+        vistaOverlay.style.display = "block";
+      }
+
+      function closeVista() {
+        vistaHelp.style.display    = "none";
+        vistaOverlay.style.display = "none";
+      }
+
+      vistaClose.addEventListener("click",    closeVista);
+      vistaCloseBtn.addEventListener("click", closeVista);
+      vistaOverlay.addEventListener("click",  closeVista);
+    </script>
+
+  </body>
+</html>

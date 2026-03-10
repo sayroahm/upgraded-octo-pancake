@@ -1,0 +1,616 @@
+<!doctype html>
+<html>
+  <head>
+    <script type="module" src="outageCheck.js"></script>
+    <script src="algorithm.js"></script>
+    <script src="console.js"></script>
+    <link rel="icon" type="image/x-icon" href="nbeplogo.png">
+    <title>NBEP-us.com | What We Investigate</title>
+    <style>
+      html { overflow-x: hidden; max-width: 100%; }
+      body {
+        margin: 0;
+        background-color: #dbd9d3;
+        font-family: Arial, sans-serif;
+        overflow-x: hidden;
+        max-width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      * { box-sizing: border-box; }
+
+      /*  TOP BANNER  */
+      .banner { width: 100%; display: flex; align-items: center; background-color: white; }
+      .banner img { margin-left: 8px; margin-right: 4px; height: 1.36em; width: auto; }
+      .banner .img2 { margin-left: 4px; margin-right: 4px; height: 1em; width: 25px; }
+      .banner p { margin: 4px; font-weight: 500; }
+      .banner .p2 { margin-left: 7px; font-weight: 700; text-decoration: underline; color: #000; }
+
+      /*  TOOLBAR  */
+      .toolbar {
+        background-color: #000;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        padding: 0 25px;
+        position: relative;
+        width: 100%;
+      }
+      .dropdown-logo { position: relative; }
+      .dropdown-logo img { height: 48px; width: auto; border: 2px solid white; border-radius: 6px; cursor: pointer; }
+      .dropdown-menu {
+        display: none; position: absolute; top: 100%; left: 0;
+        background-color: white; min-width: 200px; border: 2px solid black;
+      }
+      .dropdown-menu a { display: block; padding: 12px 15px; text-decoration: none; color: black; font-weight: 600; }
+      .dropdown-menu a:hover { background-color: #eee; }
+      .dropdown-logo:hover .dropdown-menu { display: block; }
+      .toolbar-nav { display: flex; gap: 60px; margin-left: 60px; }
+      .toolbar-nav a {
+        color: white; text-decoration: none; font-weight: 700;
+        font-size: 22px; letter-spacing: 2px; text-transform: uppercase;
+        border-bottom: 2px solid transparent; padding-bottom: 4px;
+        transition: color 0.25s ease, border-color 0.25s ease;
+      }
+      .toolbar-nav a:hover { color: #ffd900; border-bottom: 2px solid #ffd900; }
+      .toolbar-nav a.active { color: #ffd900; border-bottom: 2px solid #ffd900; }
+      .toolbar-search { margin-left: auto; margin-right: 10px; }
+      .search-box {
+        display: flex; align-items: center;
+        background: white; border-radius: 20px;
+        padding: 6px 12px; border: 1px solid #ccc;
+        transition: box-shadow 0.2s ease;
+      }
+      .search-box:focus-within { box-shadow: 0 0 0 2px #ffd900; }
+      .search-box img { width: 16px; height: 16px; margin-right: 8px; opacity: 0.7; }
+      .search-box input { border: none; outline: none; font-size: 14px; width: 185px; font-family: Arial, sans-serif; }
+
+      /*  PAGE HERO  */
+      .info-hero {
+        width: 100%;
+        background-color: #1f2f5a;
+        padding: 48px 20px 42px;
+        text-align: center;
+        border-bottom: 4px solid #ffd900;
+      }
+      .info-hero h1 {
+        color: white;
+        font-family: "Times New Roman", Georgia, serif;
+        font-size: 2.6rem;
+        font-weight: 700;
+        margin: 0 0 10px 0;
+        letter-spacing: 1px;
+      }
+      .info-hero p {
+        color: #c8d8ee;
+        font-size: 1.1rem;
+        max-width: 640px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /*  ARTICLE LAYOUT  */
+      .article-wrapper {
+        max-width: 880px;
+        margin: 44px auto 52px;
+        padding: 0 20px;
+        width: 100%;
+      }
+
+      /* Table of contents */
+      .toc {
+        background-color: #fffef0;
+        border: 2px solid #000;
+        box-shadow: 3px 3px 0 #000;
+        padding: 22px 26px;
+        margin-bottom: 38px;
+      }
+      .toc-title {
+        font-family: Arial, sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: #1a1a1a;
+        margin: 0 0 14px 0;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #000;
+      }
+      .toc ol {
+        margin: 0;
+        padding-left: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .toc ol li {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+      }
+      .toc ol li a {
+        color: #1f2f5a;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+      }
+      .toc ol li a:hover {
+        color: #ffd900;
+        text-decoration: underline;
+      }
+
+      /* Article body */
+      .article-body {
+        background-color: #fffef0;
+        border: 2px solid #000;
+        box-shadow: 4px 4px 0 #000;
+        padding: 38px 42px 44px;
+      }
+
+      .article-body h2 {
+        font-family: "Times New Roman", Georgia, serif;
+        font-size: 1.55rem;
+        font-weight: 700;
+        color: #1f2f5a;
+        margin: 40px 0 14px 0;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #1f2f5a;
+        scroll-margin-top: 20px;
+      }
+      .article-body h2:first-of-type {
+        margin-top: 0;
+      }
+
+      .article-body p {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.02rem;
+        color: #222;
+        line-height: 1.82;
+        margin: 0 0 18px 0;
+      }
+
+      .article-body p:last-child {
+        margin-bottom: 0;
+      }
+
+      .article-body strong {
+        font-family: Arial, sans-serif;
+        color: #1a1a1a;
+      }
+
+      /* Pull quote / callout box */
+      .article-callout {
+        background-color: #1f2f5a;
+        border-left: 5px solid #ffd900;
+        padding: 18px 22px;
+        margin: 28px 0;
+      }
+      .article-callout p {
+        font-family: Arial, sans-serif;
+        font-size: 0.97rem;
+        color: #e8eef8;
+        font-weight: 600;
+        margin: 0;
+        line-height: 1.6;
+      }
+
+      /* Section divider */
+      .article-divider {
+        border: none;
+        border-top: 2px solid #000;
+        margin: 36px 0;
+      }
+
+      /*  I WANT TO  */
+      .actions-section {
+        background-color: #1f2f5a;
+        padding: 40px 20px 50px;
+        text-align: center;
+        width: 100%;
+      }
+      .actions-title {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 28px;
+        font-weight: 400;
+        color: white;
+        margin: 0 0 36px 0;
+        letter-spacing: 0.5px;
+      }
+      .actions-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 48px;
+        flex-wrap: wrap;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .action-btn {
+        display: flex; flex-direction: column;
+        align-items: center; gap: 14px;
+        width: 100px; cursor: pointer; text-decoration: none;
+      }
+      .action-btn img { width: 64px; height: 64px; object-fit: contain; filter: brightness(0) invert(1); }
+      .action-btn a {
+        font-family: Arial, sans-serif; font-size: 13px;
+        color: white; text-align: center; line-height: 1.4;
+        text-decoration: none; transition: color 0.2s, text-decoration 0.2s; display: block;
+      }
+      .action-btn a:hover { color: #ffd900; text-decoration: underline; }
+
+      /*  CUSTOM CONTEXT MENU  */
+      .custom-context-menu {
+        display: none; position: fixed; z-index: 99999;
+        background-color: #fffef0; border: 1.5px solid #000;
+        min-width: 180px; font-family: Arial, sans-serif;
+      }
+      .custom-context-menu a {
+        display: block; padding: 12px 15px; text-decoration: none;
+        color: black; font-weight: 600; font-size: 15px; border-bottom: 1px solid #e8e6d8;
+      }
+      .custom-context-menu a:last-child { border-bottom: none; }
+      .custom-context-menu a:hover { background-color: #f0eedc; }
+
+      /*  VISTA DIALOG  */
+      .vista-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.45); z-index: 999998; }
+      .vista-window {
+        display: none; position: fixed; top: 50%; left: 50%;
+        transform: translate(-50%,-50%); width: 480px; z-index: 999999;
+        border-radius: 8px 8px 6px 6px;
+        box-shadow: 0 0 0 1px #4a6fa5, 0 0 0 2px #1a3a6b, 0 8px 32px rgba(0,0,0,0.6);
+        overflow: hidden; font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      }
+      .vista-titlebar {
+        background: linear-gradient(180deg,#4a90d9 0%,#2a6bbf 40%,#1a52a0 60%,#2a6bbf 100%);
+        padding: 6px 10px; display: flex; align-items: center; justify-content: space-between;
+        border-bottom: 1px solid #1a3a6b;
+      }
+      .vista-titlebar-left { display: flex; align-items: center; gap: 7px; }
+      .vista-titlebar-icon { width: 16px; height: 16px; background: radial-gradient(circle at 35% 35%,#fff,#4a90d9); border-radius: 50%; border: 1px solid rgba(255,255,255,0.4); }
+      .vista-titlebar-text { color: white; font-size: 13px; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.5); letter-spacing: 0.3px; }
+      .vista-close {
+        width: 22px; height: 22px; border-radius: 50%; border: 1px solid #8b1a1a;
+        background: radial-gradient(circle at 40% 30%,#ff6b6b,#cc0000 60%,#8b0000);
+        color: white; font-size: 11px; font-weight: bold; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: inset 0 1px 1px rgba(255,255,255,0.3); transition: filter 0.15s;
+      }
+      .vista-close:hover { filter: brightness(1.2); }
+      .vista-body { background: linear-gradient(180deg,#f0f4fb 0%,#dce6f5 100%); }
+      .vista-content { padding: 20px 22px 16px 22px; border-bottom: 1px solid #b8cce4; }
+      .vista-content-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+      .vista-content-icon {
+        width: 48px; height: 48px; flex-shrink: 0;
+        background: radial-gradient(circle at 35% 30%,#fff,#4a90d9 50%,#1a52a0);
+        border-radius: 8px; border: 1px solid #4a6fa5;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        display: flex; align-items: center; justify-content: center; font-size: 26px;
+      }
+      .vista-content-title { font-size: 17px; font-weight: 700; color: #1a3a6b; text-shadow: 0 1px 0 rgba(255,255,255,0.8); }
+      .vista-content-subtitle { font-size: 12px; color: #4a6fa5; margin-top: 2px; }
+      .vista-content p { font-size: 13px; color: #222; line-height: 1.6; margin: 0 0 10px 0; }
+      .vista-footer {
+        background: linear-gradient(180deg,#dce6f5 0%,#c8d8ee 100%);
+        padding: 10px 22px; display: flex; justify-content: flex-end; gap: 8px;
+        border-top: 1px solid #b8cce4;
+      }
+      .vista-btn {
+        padding: 5px 18px; font-size: 13px; font-family: "Segoe UI",Tahoma,Arial,sans-serif;
+        border-radius: 4px; cursor: pointer; border: 1px solid #4a6fa5;
+        background: linear-gradient(180deg,#f0f6ff 0%,#d0e4f8 50%,#b8d0f0 51%,#cce0ff 100%);
+        color: #1a3a6b; font-weight: 600;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 1px 2px rgba(0,0,0,0.15);
+        transition: filter 0.15s;
+      }
+      .vista-btn:hover { filter: brightness(1.07); }
+      .vista-btn-primary {
+        border-color: #1a3a6b;
+        background: linear-gradient(180deg,#4a90d9 0%,#2a6bbf 50%,#1a52a0 51%,#2a70cc 100%);
+        color: white; box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 2px rgba(0,0,0,0.3);
+      }
+
+      /*  FOOTER  */
+      .footer { margin-top: auto; background: black; color: white; width: 100%; padding: 20px 0; }
+      .footer-inner { width: 95%; margin: auto; display: flex; justify-content: space-between; align-items: flex-start; }
+      .footer-links { display: flex; flex-direction: column; }
+      .footer-row { display: flex; gap: 18px; padding: 10px 0; border-bottom: 1px solid #333; }
+      .footer-row:last-child { border-bottom: none; }
+      .footer-btn { text-decoration: none; color: white; font-size: 13px; letter-spacing: .5px; padding: 2px 4px; transition: color .25s ease; }
+      .footer-btn:hover { color: #ffd900; }
+      .footer-social { margin-top: 12px; display: flex; gap: 10px; }
+      .footer-social img { height: 18px; width: 18px; }
+      .footer-logo { display: flex; align-items: center; gap: 10px; }
+      .footer-logo-img { height: 110px; width: auto; }
+      .footer-text { font-size: 15px; color: white; }
+    </style>
+  </head>
+  <body>
+
+    <!-- TOP BANNER -->
+    <div class="banner">
+      <img src="nbeplogo.png" alt="logo">
+      <img class="img2" src="usflag.png" alt="usflag">
+      <p>This is an official site of the NBEP. A non-profit non-government organization.</p>
+      <a class="p2" href="https://sayroahm.github.io/nbep/howyouknow">?</a>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+      <div class="dropdown-logo">
+        <img src="nbeplogo.png" alt="menu">
+        <div class="dropdown-menu">
+          <a href="/">Home</a>
+          <a href="/wanted">Most Wanted</a>
+          <a href="/submit-a-tip">Report Crime</a>
+          <a href="/resources">Resources</a>
+          <a href="/contact-us">Contact</a>
+        </div>
+      </div>
+      <div class="toolbar-nav">
+        <a href="/">Home</a>
+        <a href="/wanted">Most Wanted</a>
+        <a href="/news">News</a>
+        <a href="/info" class="active">What We Investigate</a>
+      </div>
+      <div class="toolbar-search">
+        <div class="search-box">
+          <img src="searchicon.png" alt="search">
+          <input type="text" placeholder="Search" id="toolbarSearch">
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div style="flex: 1;">
+
+      <!-- HERO -->
+      <div class="info-hero">
+        <h1>What We Investigate</h1>
+        <p>A full breakdown of the types of cases the NBEP takes on, why we take them on, and how we work to bring them forward.</p>
+      </div>
+
+      <!-- ARTICLE -->
+      <div class="article-wrapper">
+
+        <!-- TABLE OF CONTENTS -->
+        <div class="toc">
+          <p class="toc-title">In This Article</p>
+          <ol>
+            <li><a href="#intro">Who We Are and What We Do</a></li>
+            <li><a href="#cac">Child Sexual Exploitation and Abuse</a></li>
+            <li><a href="#trafficking">Human Trafficking and Online Recruitment</a></li>
+            <li><a href="#grooming">Online Grooming and Predatory Behavior</a></li>
+            <li><a href="#sextortion">Sextortion and Image-Based Abuse</a></li>
+            <li><a href="#cyberstalking">Cyberstalking and Targeted Harassment</a></li>
+            <li><a href="#darkweb">Dark Web Activity and Exploitation Networks</a></li>
+            <li><a href="#process">How a Case Gets Reviewed</a></li>
+            <li><a href="#limits">What We Cannot Do</a></li>
+            <li><a href="#tip">How You Can Help</a></li>
+          </ol>
+        </div>
+
+        <!-- ARTICLE BODY -->
+        <div class="article-body">
+
+          <h2 id="intro">Who We Are and What We Do</h2>
+          <p>The National Bureau of Exploitation Protection, or NBEP, is a non-government, non-profit organization. We are not a law enforcement agency, we do not have arrest powers, and we do not operate as a branch of any federal or state body. What we do is sit in the middle ground between the public and the agencies that can actually act on a case. We gather, organize, and forward information about exploitation-related crimes to give those cases a better shot at being picked up and investigated by the authorities who have the legal tools to do something about them.</p>
+          <p>The NBEP was built on a simple observation: a lot of exploitation crimes go unreported, and a lot of the ones that do get reported end up lost in a system that is stretched thin. Victims often do not know where to turn, or they turn somewhere and hear nothing back. We want to close that gap as much as we can. We are not a replacement for law enforcement, but we try to make it easier for the right people to see the right information at the right time.</p>
+          <p>Everything we do is centered on crimes involving exploitation, especially when the internet or digital technology plays a role. If a crime involves someone being manipulated, coerced, abused, or trafficked, and there is a digital component to it, that is the kind of case we focus on.</p>
+
+          <div class="article-callout">
+            <p>The NBEP is a non-government organization. We do not arrest, prosecute, or detain anyone. We act as a reporting and forwarding body to increase the likelihood that a case receives proper law enforcement attention.</p>
+          </div>
+
+          <h2 id="cac">Child Sexual Exploitation and Abuse</h2>
+          <p>This is the area we take the most seriously, and it covers a wide range of criminal behavior. Child sexual exploitation and abuse, often referred to as CSEA, includes the production, distribution, and possession of child sexual abuse material (CSAM), as well as the direct sexual abuse of minors by individuals who used the internet to locate, contact, or groom their victims.</p>
+          <p>Online platforms have made it tragically easy for offenders to find and target children. Social media, gaming platforms, messaging apps, and chat rooms are all spaces where children spend real time, and where predators operate with the intent to exploit. The NBEP reviews tips involving suspected CSAM, suspected contact between adults and minors that appears predatory in nature, and reports of children who may have been victimized through digital channels.</p>
+          <p>When a credible tip comes in involving a child, it is treated as the highest priority. We do not sit on these cases. We move them forward to the appropriate channels as quickly as possible, including the National Center for Missing and Exploited Children (NCMEC) and law enforcement agencies at the federal and local level depending on the nature of the tip.</p>
+          <p>It is also worth saying clearly that we take the privacy of child victims very seriously. No identifying information about a minor victim is ever shared publicly through our organization. Ever.</p>
+
+          <hr class="article-divider">
+
+          <h2 id="trafficking">Human Trafficking and Online Recruitment</h2>
+          <p>Human trafficking is one of the most serious crimes in the world, and the internet has made recruitment significantly easier for traffickers. What used to require physical contact and geographic proximity can now happen entirely through a screen. A trafficker can recruit a victim in a different state or a different country without ever meeting them in person.</p>
+          <p>The NBEP investigates tips related to suspected human trafficking when there is a digital component involved. This includes fake job postings designed to lure victims, social media recruitment schemes where traffickers pose as romantic interests or talent scouts, and online platforms being used to advertise or sell victims for sexual exploitation or forced labor.</p>
+          <p>Trafficking cases are complicated. Victims often do not self-identify as victims, especially in the early stages of exploitation. They may defend the person trafficking them or be too afraid to speak up. We approach these cases with that reality in mind. Our goal is not to pressure anyone, but to make sure that when credible information exists, it gets into the hands of agencies that have the resources to investigate it properly.</p>
+
+          <hr class="article-divider">
+
+          <h2 id="grooming">Online Grooming and Predatory Behavior</h2>
+          <p>Grooming is the process by which an offender builds trust with a potential victim, and sometimes with that victim's family, in order to gain access and eventually commit abuse. It does not always look like what people expect. It can be slow, patient, and disguised as genuine care or friendship. Online grooming follows the same general pattern but happens through messages, comments, games, and social media interactions.</p>
+          <p>The NBEP investigates reports of adults engaging in inappropriate or suspicious contact with minors online. This includes adults who send unsolicited messages to children, who attempt to move conversations to private platforms, who share sexual content with minors, who ask minors for photos or personal information, or who attempt to arrange in-person meetings.</p>
+          <p>Grooming behaviors can be subtle and easy to rationalize away. A lot of parents and guardians second-guess themselves when they spot something that feels off. We encourage people to submit a tip even when they are not completely sure. It is far better to submit something that turns out to be nothing than to ignore something that turns out to be serious.</p>
+
+          <hr class="article-divider">
+
+          <h2 id="sextortion">Sextortion and Image-Based Abuse</h2>
+          <p>Sextortion is a form of blackmail where a person is threatened with the release of sexual images or content unless they comply with demands. Those demands can be financial, or they can be for more explicit material, or for contact. It is a crime that affects people of all ages, but it has become especially common against teenagers and young adults who shared intimate images in what they believed was a private context.</p>
+          <p>Image-based abuse more broadly includes the non-consensual sharing of intimate images, sometimes called revenge porn, where someone shares explicit photos or videos of another person without their consent, often after a breakup or as a form of retaliation. Both of these crimes cause serious psychological harm and can follow a victim for years.</p>
+          <p>The NBEP reviews tips related to both sextortion and image-based abuse. If you or someone you know is being blackmailed with intimate content, or if explicit images have been shared without consent, that is something we want to hear about. We can help identify where to report and who to contact to get content taken down and to pursue the person responsible.</p>
+
+          <hr class="article-divider">
+
+          <h2 id="cyberstalking">Cyberstalking and Targeted Harassment</h2>
+          <p>Cyberstalking is persistent, targeted harassment carried out through digital means. It goes well beyond a single mean comment or a hostile message. It involves repeated, unwanted contact designed to intimidate, frighten, or control someone. It can include monitoring someone's online activity, impersonating them to damage their reputation, sending threats, flooding them with messages, or coordinating others to pile on.</p>
+          <p>When cyberstalking is connected to exploitation, for example when it is used to coerce a victim into silence after abuse, or when it is being used to track a minor, or when it is part of a broader pattern of control by a trafficker, that is within our scope. We also review cases where cyberstalking appears to be a precursor to physical harm, particularly in cases involving minors or prior domestic situations.</p>
+          <p>Targeted harassment campaigns, where groups of individuals coordinate to harass a specific person online, can also fall within our review process when the conduct involves minors, sexual content, or threats that suggest a real-world risk.</p>
+
+          <hr class="article-divider">
+
+          <h2 id="darkweb">Dark Web Activity and Exploitation Networks</h2>
+          <p>The dark web is a part of the internet that is not indexed by standard search engines and requires specific software to access. While it has legitimate uses, it is also a well-documented space for criminal activity, including the trade of CSAM, the sale of trafficking victims, forums for predators, and the distribution of exploitation material.</p>
+          <p>The NBEP reviews tips that involve dark web activity connected to exploitation crimes. If someone has encountered forums, marketplaces, or communications on the dark web that appear to involve exploitation of minors, trafficking, or the distribution of abuse material, we want to know about it. These tips are handled with an extra layer of care given the sensitivity of the information and the potential risks involved.</p>
+          <p>We do not encourage anyone to go looking for this kind of content. If you have come across it incidentally or have information about it from a trustworthy source, submitting a tip through our platform is the right move. Do not attempt to investigate these networks yourself.</p>
+
+          <div class="article-callout">
+            <p>If you have encountered suspected exploitation material online, do not save, share, or distribute it. Report it immediately through the appropriate channels. Possessing such material, even for the purpose of reporting it, can have serious legal consequences.</p>
+          </div>
+
+          <hr class="article-divider">
+
+          <h2 id="process">How a Case Gets Reviewed</h2>
+          <p>When a tip comes in through our platform, it goes into a review queue. A member of our review team looks at the information provided and assesses it for credibility, urgency, and category. Tips involving children or imminent threats are prioritized above everything else.</p>
+          <p>If a tip contains enough actionable information, it is forwarded to the appropriate authority. Depending on the nature of the crime, that might mean the FBI's Internet Crime Complaint Center (IC3), the NCMEC CyberTipline, a state attorney general's office, or local law enforcement. In some cases it may go to multiple agencies at once.</p>
+          <p>After a tip is forwarded, we do not always receive follow-up from the receiving agency. This is normal and expected. Law enforcement agencies are not obligated to update us on the status of a case, and in many situations they legally cannot share information about an ongoing investigation. This means we often cannot tell a tip submitter what happened with their report. We know that can be frustrating, but it is the reality of how the process works.</p>
+          <p>Tips that do not contain enough information to be actionable may be held in our system in case additional information comes in later that connects the dots. We do not discard tips lightly.</p>
+
+          <hr class="article-divider">
+
+          <h2 id="limits">What We Cannot Do</h2>
+          <p>We want to be upfront about our limitations because we think transparency matters. The NBEP cannot arrest anyone. We cannot issue subpoenas, warrants, or court orders. We cannot compel any platform to remove content, though we can help direct you to the right process for doing so. We cannot guarantee that a tip will result in an investigation or that anyone will be charged with a crime.</p>
+          <p>We also cannot provide legal advice or represent victims in any legal proceeding. If you need legal help, we can point you toward resources, but that is the limit of what we can offer in that area.</p>
+          <p>We are a small organization operating with volunteers and limited resources. We do our best to respond to tips quickly and thoughtfully, but we cannot promise a response to every message we receive, particularly general contact messages. Tips submitted through the formal tip submission process are always reviewed. General contact messages are reviewed when capacity allows.</p>
+          <p>If you are in immediate danger, please call 911. We are not an emergency service and we are not available around the clock in the way that emergency services are.</p>
+
+          <hr class="article-divider">
+
+          <h2 id="tip">How You Can Help</h2>
+          <p>The single most useful thing anyone can do is submit a tip if they have information about a possible exploitation crime. A lot of people hesitate because they are not sure if what they know is enough, or because they do not want to get someone in trouble if they are wrong. We understand that hesitation, but we want to encourage people to submit anyway. Our review team is trained to evaluate tips carefully. We are not going to take action on something that is vague or unsubstantiated, but we would rather have that information sitting in our system than not have it at all.</p>
+          <p>Volunteering with the NBEP is another way to contribute. We rely on volunteers for a significant portion of our operations, from tip review to community outreach to administrative work. If you have skills you think could be useful, we encourage you to apply through the careers page.</p>
+          <p>Spreading awareness is also genuinely valuable. A lot of people do not know that organizations like the NBEP exist or that there are options beyond calling the police when they encounter something disturbing online. Sharing information about our resources with your community, your school, your workplace, or your social networks helps make sure that more people know where to turn when they need it.</p>
+          <p>We are not here to be heroes. We are here to be useful. If you have something to report, please report it. That is what we are here for.</p>
+
+        </div>
+      </div>
+
+      <!-- I WANT TO -->
+      <div class="actions-section">
+        <p class="actions-title">I Want To</p>
+        <div class="actions-buttons">
+          <div class="action-btn">
+            <img src="imagery/Apply.png" alt="Apply as a Volunteer">
+            <a href="/careers">Apply as a Volunteer</a>
+          </div>
+          <div class="action-btn">
+            <img src="imagery/submittip.png" alt="Submit a Tip">
+            <a href="/submit-a-tip">Submit a Tip</a>
+          </div>
+          <div class="action-btn">
+            <img src="imagery/contactus.png" alt="Contact the NBEP">
+            <a href="/contact-us">Contact the NBEP</a>
+          </div>
+          <div class="action-btn">
+            <img src="imagery/softwaregain.png" alt="Gain Access to NBEP Software">
+            <a href="/contact-us">Gain Access to NBEP Software</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end flex:1 -->
+
+    <!-- VISTA OVERLAY & WINDOW -->
+    <div class="vista-overlay" id="vistaOverlay"></div>
+    <div class="vista-window" id="vistaHelp">
+      <div class="vista-titlebar">
+        <div class="vista-titlebar-left">
+          <div class="vista-titlebar-icon"></div>
+          <span class="vista-titlebar-text">NBEP Help Center</span>
+        </div>
+        <div class="vista-close" id="vistaClose">X</div>
+      </div>
+      <div class="vista-body">
+        <div class="vista-content">
+          <div class="vista-content-header">
+            <div class="vista-content-icon">❔</div>
+            <div>
+              <div class="vista-content-title">NBEP Help Center</div>
+              <div class="vista-content-subtitle">National Bureau of Exploitation Protection</div>
+            </div>
+          </div>
+          <p>This page explains the types of cases the NBEP investigates and how our review process works.</p>
+          <p>If you have a tip to submit, please use the <strong>Submit a Tip</strong> page. For general questions, visit <strong>Contact Us</strong>.</p>
+        </div>
+        <div class="vista-footer">
+          <button class="vista-btn" id="vistaCloseBtn">Close</button>
+          <button class="vista-btn vista-btn-primary" onclick="window.location.href='/submit-a-tip'">Submit a Tip</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <div class="footer-row">
+            <a class="footer-btn" href="/"><span>HOME</span></a>
+            <a class="footer-btn" href="/wanted"><span>MOST WANTED</span></a>
+            <a class="footer-btn" href="/news"><span>NEWS</span></a>
+            <a class="footer-btn" href="/info"><span>WHAT WE INVESTIGATE</span></a>
+          </div>
+          <div class="footer-row">
+            <a class="footer-btn" href="/contact-us"><span>CONTACT US</span></a>
+            <a class="footer-btn"><span>OFFICES</span></a>
+            <a class="footer-btn" href="/software"><span>SOFTWARE</span></a>
+            <a class="footer-btn"><span>DOCUMENTS</span></a>
+          </div>
+          <div class="footer-row">
+            <a class="footer-btn"><span>ARCHIVES</span></a>
+            <a class="footer-btn"><span>DIRECTORS ROSTER</span></a>
+            <a class="footer-btn"><span>HELP</span></a>
+            <a class="footer-btn"><span>ADMINISTRATIVE SERVICES</span></a>
+          </div>
+          <div class="footer-social">
+            <img src="youtube.png" alt="YouTube">
+            <img src="facebook.png" alt="Facebook">
+            <img src="atlassian.png" alt="Atlassian">
+            <img src="x.png" alt="X">
+          </div>
+          <div class="footer-text">
+            <p>NBEP&copy; 2026-2027. All rights reserved.</p>
+          </div>
+        </div>
+        <div class="footer-logo">
+          <img src="nbeplogo.png" class="footer-logo-img" alt="NBEP Logo">
+          <img src="nbep-text.png" class="footer-logo-img" alt="NBEP">
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      console.log("Version: Lakewood I.167");
+      console.log("Page: What We Investigate");
+
+      //  CUSTOM CONTEXT MENU 
+      const contextMenu = document.createElement("div");
+      contextMenu.classList.add("custom-context-menu");
+      contextMenu.innerHTML = `
+        <a href="/resources">Resources</a>
+        <a href="#" id="contextHelp">Help</a>
+        <a href="/admin-login">Admin Login</a>
+        <a href="/info">What We Investigate</a>
+      `;
+      document.body.appendChild(contextMenu);
+
+      document.getElementById("contextHelp").addEventListener("click", (e) => {
+        e.preventDefault();
+        contextMenu.style.display = "none";
+        openVista();
+      });
+
+      document.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        contextMenu.style.display = "block";
+        const mw = contextMenu.offsetWidth, mh = contextMenu.offsetHeight;
+        const ww = window.innerWidth,       wh = window.innerHeight;
+        contextMenu.style.left = (e.clientX + mw > ww) ? (ww - mw - 5) + "px" : e.clientX + "px";
+        contextMenu.style.top  = (e.clientY + mh > wh) ? (wh - mh - 5) + "px" : e.clientY + "px";
+      });
+
+      document.addEventListener("click",  () => { contextMenu.style.display = "none"; });
+      document.addEventListener("scroll", () => { contextMenu.style.display = "none"; });
+
+      //  VISTA DIALOG 
+      const vistaHelp     = document.getElementById("vistaHelp");
+      const vistaOverlay  = document.getElementById("vistaOverlay");
+      const vistaClose    = document.getElementById("vistaClose");
+      const vistaCloseBtn = document.getElementById("vistaCloseBtn");
+
+      function openVista()  { vistaHelp.style.display = "block"; vistaOverlay.style.display = "block"; }
+      function closeVista() { vistaHelp.style.display = "none";  vistaOverlay.style.display = "none";  }
+
+      vistaClose.addEventListener("click",    closeVista);
+      vistaCloseBtn.addEventListener("click", closeVista);
+      vistaOverlay.addEventListener("click",  closeVista);
+    </script>
+  </body>
+</html>
