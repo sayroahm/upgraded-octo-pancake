@@ -398,6 +398,44 @@
       .footer-text { font-size: 15px; color: white; }
       .footer-text p { margin: 4px 0; }
 
+      /* Warning */
+      .home-warn {
+        margin: 30px auto;
+        max-width: 1200px;
+        background-color: #fff7e6;
+        border-left: 6px solid #ff8c00;
+        border-radius: 10px;
+        padding: 18px 22px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+
+      .home-warn h3 {
+        margin: 0 0 6px 0;
+        color: #ff8c00;
+        font-size: 1.25rem;
+        font-weight: 700;
+      }
+
+      .home-warn p {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #333;
+      }
+
+      .warn-icon {
+        background: #ff8c00;
+        color: white;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+
     </style>
   </head>
   <body>
@@ -440,6 +478,13 @@
     <div class="page-heading">
       <h1>Most Wanted</h1>
       <p class="heading-sub">NBEP &nbsp;&#9632;&nbsp; Active Fugitive Registry</p>
+    </div>
+
+    <!-- Warning -->
+    <div class="home-warn">
+      <div class="warn-icon">!</div>
+      <h3>Disclaimer:</h3>
+      <p>All fugitives on FBI.gov and NBEP-us.com are innocent until proven guilty. Please be aware some people may suffer from mental health conditions and/or tragic events.</p>
     </div>
 
     <!-- main content -->
